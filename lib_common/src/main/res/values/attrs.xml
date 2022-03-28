@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="AppImageView">
+        <attr name="image_pressed_color" format="color" />
+        <!--宽高比值 比值为1 表示 高度等于宽度 默认没有改变控件高度，设置后才改变-->
+        <attr name="aspect_ratio" format="float" />
+        <!--圆角半径-->
+        <attr name="fillet_radius" format="dimension" />
+        <!-- 是否是圆形图片 默认是false 不是-->
+        <attr name="is_circle" format="boolean" />
+        <!--  排除某个方向 或者 几个方向 不显示圆角 不同方向使用 | 隔开（运算符）-->
+        <attr name="exclude_direction">
+            <flag name="left_top" value="0x0001" />
+            <flag name="right_top" value="0x0010" />
+            <flag name="left_bottom" value="0x0100" />
+            <flag name="right_bottom" value="0x1000" />
+        </attr>
+    </declare-styleable>
+    <declare-styleable name="AppTextView">
+        <attr name="text_pressed_color" format="color" />
+        <attr name="text_selected_color" format="color" />
+        <attr name="bg_radius" format="dimension" />
+        <attr name="bg_left_top_radius" format="dimension" />
+        <attr name="bg_left_bottom_radius" format="dimension" />
+        <attr name="bg_right_top_radius" format="dimension" />
+        <attr name="bg_right_bottom_radius" format="dimension" />
+        <attr name="stroke_color" format="color" />
+        <attr name="stroke_width" format="dimension" />
+        <attr name="is_ripple_enable" format="boolean" />
+        <attr name="bg_color" format="color" />
+    </declare-styleable>
+    <!--    自定义的可以控制Drawable大小方向的TextView-->
+    <declare-styleable name="DrawableTextView">
+        <attr name="drawableLeft" format="reference" />
+        <attr name="drawableBottom" format="reference" />
+        <attr name="drawableRight" format="reference" />
+        <attr name="drawableTop" format="reference" />
+        <attr name="drawableWidth" format="dimension" />
+        <attr name="drawableHeight" format="dimension" />
+        <attr name="drawablePressedColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="AppTitle">
+        <!--没有标题栏 只有错误页面-->
+        <attr name="no_title" format="boolean" />
+        <attr name="title" format="string" />
+        <attr name="title_color" format="color" />
+        <attr name="title_size" format="dimension" />
+        <attr name="title_background" format="color" />
+        <!--回退位置的图标，标题栏的最左边-->
+        <attr name="back_icon" format="reference" />
+        <attr name="back_icon_color" format="color" />
+        <attr name="no_back_icon" format="boolean" />
+        <attr name="right_one_icon" format="reference" />
+        <attr name="right_two_icon" format="reference" />
+        <attr name="right_one_text" format="string" />
+        <attr name="right_two_text" format="string" />
+        <attr name="right_one_text_color" format="color" />
+        <attr name="right_two_text_color" format="color" />
+        <attr name="right_one_text_pressed_color" format="color" />
+        <attr name="right_two_text_pressed_color" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="ProgressView">
+        <!--进度条的环的宽度-->
+        <attr name="ring_width" format="dimension" />
+        <!--进度条默认的底色-->
+        <attr name="normal_color" format="color" />
+        <!-- 进度条覆盖色-->
+        <attr name="cover_color" format="color" />
+        <attr name="hint_text_color" format="color" />
+        <attr name="hint_text_size" format="dimension" />
+        <attr name="hint_text" format="string" />
+        <attr name="schedule_text_color" format="color" />
+        <attr name="schedule_text_size" format="dimension" />
+    </declare-styleable>
+
+    <!-- 自定义的APP全局button-->
+    <declare-styleable name="AppButton">
+        <attr name="btn_bg_color" format="color" />
+        <attr name="btn_disabled_color" format="color" />
+        <attr name="btn_pressed_color" format="color" />
+        <attr name="btn_radius" format="dimension" />
+        <attr name="btn_stroke_color" format="color" />
+        <attr name="btn_stroke_width" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="AppEditText">
+        <attr name="under_line_color" format="color"/>
+        <attr name="under_line_height" format="dimension"/>
+    </declare-styleable>
+
+    <!--    自定义的星级平分控件-->
+    <declare-styleable name="StarRating">
+        <!--星星间距-->
+        <attr name="starDistance" format="dimension" />
+        <!--星星大小-->
+        <attr name="starSize" format="dimension" />
+        <!--星星个数-->
+        <attr name="starCount" format="integer" />
+        <!--星星空图-->
+        <attr name="starEmpty" format="reference" />
+        <!--星星满图-->
+        <attr name="starFill" format="reference" />
+        <!--是否作为指示器，默认是 就不能点击-->
+        <attr name="isIndicator" format="boolean" />
+        <!--是否是整数评分（是否整颗星）-->
+        <attr name="starIntegerMask" format="boolean" />
+    </declare-styleable>
+
+    <!--流式布局的属性-->
+    <declare-styleable name="WordWrapView">
+        <attr name="wrapPaddingHor" format="dimension" />
+        <attr name="wrapPaddingVertical" format="dimension" />
+        <attr name="wrapMarginHor" format="dimension" />
+        <attr name="wrapMarginVertical" format="dimension" />
+    </declare-styleable>
+    <!--自定义的计数控件-->
+    <declare-styleable name="CountingView">
+        <!--计数控件的左右按钮的大小，正方形-->
+        <attr name="countingBtnSize" format="dimension" />
+        <!--计数的显示文字大小-->
+        <attr name="countingTextSize" format="dimension" />
+        <!--计数的显示文字颜色-->
+        <attr name="countingTextColor" format="color" />
+        <!--按钮动态设置+，-号大小-->
+        <attr name="countingBtnTextSize" format="dimension" />
+        <!--按钮动态设置+，-号颜色-->
+        <attr name="countingBtnTextColor" format="color" />
+        <!--按钮动态设置外框颜色-->
+        <attr name="countingBtnBoxColor" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="StandardChart">
+        <attr name="standard_line_width" format="dimension" />
+    </declare-styleable>
+    <declare-styleable name="ScaleTable">
+        <attr name="scale_min_radius" format="dimension" />
+        <attr name="scale_line_width" format="dimension" />
+        <attr name="scale_length" format="dimension" />
+        <attr name="pointer_handle_width" format="dimension" />
+        <attr name="pointer_handle_length" format="dimension" />
+        <attr name="pointer_head_radius" format="dimension" />
+    </declare-styleable>
+</resources>

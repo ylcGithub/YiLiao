@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="base_AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@color/activity_normal_bg_color</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="app_title_image_style">
+        <item name="android:layout_width">@dimen/widget_size_44</item>
+        <item name="android:layout_height">@dimen/widget_size_44</item>
+        <item name="android:padding">@dimen/widget_size_10</item>
+    </style>
+
+    <style name="app_title_title_view_style">
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/color_333</item>
+        <item name="android:textSize">@dimen/font_size_16</item>
+        <item name="android:layout_height">@dimen/widget_size_44</item>
+    </style>
+
+    <style name="app_title_text_button_style">
+        <item name="android:layout_height">@dimen/widget_size_44</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/color_333</item>
+        <item name="android:textSize">@dimen/font_size_16</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:paddingStart">@dimen/widget_size_10</item>
+        <item name="android:paddingEnd">@dimen/widget_size_10</item>
+    </style>
+</resources>

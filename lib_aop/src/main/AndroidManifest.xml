@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="dyzn.csxc.yiliao.lib_aop">
+
+    <application>
+        <activity
+            android:name=".permission.PermissionActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:hardwareAccelerated="false"
+            android:label="动态权限申请"
+            android:theme="@style/translucent"
+            android:windowSoftInputMode="adjustResize" />
+    </application>
+</manifest>

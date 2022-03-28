@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--fragment 切换动画的执行时间-->
+    <integer name="card_flip_time_full">150</integer>
+    <!--glide 加载图片成功后图片的显示动画需要的时间-->
+    <integer name="image_show_time">100</integer>
+    <integer name="max_login_psw_length">9</integer>
+</resources>

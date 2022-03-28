@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="dyzn.csxc.yiliao.bluetooth">
+
+    <application>
+        <activity
+            android:name=".view.BluetoothActivity"
+            android:label="蓝牙模块"
+            android:screenOrientation="portrait" />
+    </application>
+
+</manifest>

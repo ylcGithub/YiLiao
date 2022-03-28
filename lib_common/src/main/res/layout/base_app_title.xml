@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_title"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/widget_size_44">
+
+    <dyzn.csxc.yiliao.lib_common.widget.AppImageView
+        android:id="@+id/iv_back"
+        style="@style/app_title_image_style" />
+
+    <dyzn.csxc.yiliao.lib_common.widget.AppTextView
+        android:id="@+id/tv_title"
+        android:layout_marginStart="@dimen/widget_size_44"
+        android:layout_marginEnd="@dimen/widget_size_44"
+        style="@style/app_title_title_view_style" />
+
+    <dyzn.csxc.yiliao.lib_common.widget.AppImageView
+        android:id="@+id/iv_right_one"
+        style="@style/app_title_image_style"
+        android:layout_alignParentEnd="true"
+        android:visibility="gone"/>
+
+    <dyzn.csxc.yiliao.lib_common.widget.AppImageView
+        android:id="@+id/iv_right_two"
+        style="@style/app_title_image_style"
+        android:layout_toStartOf="@+id/iv_right_one"
+        android:visibility="gone"/>
+
+    <dyzn.csxc.yiliao.lib_common.widget.AppTextView
+        android:id="@+id/tv_right_one"
+        style="@style/app_title_text_button_style"
+        android:layout_alignParentEnd="true"
+        android:visibility="gone"
+        tools:text="按钮" />
+
+    <dyzn.csxc.yiliao.lib_common.widget.AppTextView
+        android:id="@+id/tv_right_two"
+        style="@style/app_title_text_button_style"
+        android:layout_toStartOf="@+id/tv_right_one"
+        android:visibility="gone"
+        tools:text="按钮2" />
+
+    <LinearLayout
+        android:id="@+id/default_page"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/iv_back"
+        android:background="@null"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <dyzn.csxc.yiliao.lib_common.widget.AppImageView
+            android:id="@+id/default_page_hint_icon"
+            android:layout_width="@dimen/widget_size_185"
+            android:layout_height="@dimen/widget_size_185" />
+
+        <dyzn.csxc.yiliao.lib_common.widget.AppTextView
+            android:id="@+id/default_page_tv_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/widget_size_20"
+            android:textColor="@color/color_999"
+            android:textSize="@dimen/font_size_15"
+            app:text_pressed_color="@color/color_bbb" />
+    </LinearLayout>
+</RelativeLayout>

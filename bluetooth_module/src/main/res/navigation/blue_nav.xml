@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/blue_nav.xml"
+    app:startDestination="@id/blue_bluetooth_connect_fragment">
+
+    <fragment
+        android:id="@+id/blue_bluetooth_connect_fragment"
+        android:name="dyzn.csxc.yiliao.bluetooth.view.connect.BluetoothConnectFragment"
+        android:label="BluetoothConnectFragment" />
+</navigation>

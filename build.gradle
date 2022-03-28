@@ -1,0 +1,29 @@
+apply from: "config.gradle"
+
+buildscript {
+    ext.kotlin_version = "1.5.10"
+    ext.nav_version = "2.2.2"
+    repositories {
+        google()
+        maven{url 'http://maven.aliyun.com/nexus/content/groups/public/'}
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:4.2.2"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
+        //AOP面向切面编程的库
+        classpath 'com.hujiang.aspectjx:gradle-android-plugin-aspectjx:2.0.10'
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        maven { url 'https://jitpack.io' }
+        maven{url 'http://maven.aliyun.com/nexus/content/groups/public/'}
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

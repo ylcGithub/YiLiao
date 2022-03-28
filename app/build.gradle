@@ -1,0 +1,46 @@
+apply plugin: 'com.android.application'
+apply from: "../config_build.gradle"
+
+android {
+    defaultConfig {
+        applicationId "dyzn.csxc.yiliao.com"
+    }
+
+    flavorDimensions  "verison"
+    productFlavors {
+        //打包assembleVersionDevDebug
+        versionDev{
+            dimension "verison"
+        }
+        //gradlew clean assembleVersionTestDebug
+        versionTest {
+            dimension "verison"
+        }
+        // gradlew clean assembleVersionOnlineRelease
+        versionOnline{
+            dimension "verison"
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+}
+
+dependencies {
+    implementation project(':lib_common')
+    if (!isBuildModule.toBoolean()) {
+        implementation project(':bluetooth_module')
+    }
+}

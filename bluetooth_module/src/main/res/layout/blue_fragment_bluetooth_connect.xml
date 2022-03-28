@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="dyzn.csxc.yiliao.bluetooth.util.BlueMatchUtil" />
+
+        <variable
+            name="click"
+            type="dyzn.csxc.yiliao.bluetooth.view.connect.BluetoothConnectFragment.ClickProxy" />
+
+        <variable
+            name="vm"
+            type="dyzn.csxc.yiliao.bluetooth.view.connect.BluetoothConnectViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="ResourceName">
+
+        <dyzn.csxc.yiliao.lib_common.widget.AppTitle
+            android:id="@+id/app_title"
+            titleBackListener="@{()->click.back()}"
+            titleOneIconListener="@{()->click.toScan()}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:right_one_icon="@drawable/vector_drawable_icon_scan_it"
+            app:title="@string/bluetooth_connect" />
+
+        <dyzn.csxc.yiliao.lib_common.widget.AppEditText
+            android:id="@+id/et_bluetooth"
+            style="@style/blue_et_style"
+            afterTextChanged="@{vm.bluetoothAddress}"
+            android:hint="@string/blue_please_input_bluetooth_address"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/app_title"
+            app:under_line_color="@color/color_main_blue"
+            app:under_line_height="@dimen/widget_size_3" />
+
+        <dyzn.csxc.yiliao.lib_common.widget.AppEditText
+            android:id="@+id/et_wifi_name"
+            style="@style/blue_et_style"
+            afterTextChanged="@{vm.wifiName}"
+            android:hint="@string/blue_please_input_wifi_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_bluetooth"
+            app:under_line_color="@color/color_main_blue"
+            app:under_line_height="@dimen/widget_size_3" />
+
+        <dyzn.csxc.yiliao.lib_common.widget.AppEditText
+            android:id="@+id/et_wifi_password"
+            style="@style/blue_et_style"
+            afterTextChanged="@{vm.wifiPassword}"
+            android:hint="@string/blue_please_input_wifi_password"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_wifi_name"
+            app:under_line_color="@color/color_main_blue"
+            app:under_line_height="@dimen/widget_size_3" />
+
+        <dyzn.csxc.yiliao.lib_common.widget.AppButton
+            android:id="@+id/btn_search_blue"
+            style="@style/blue_button_style"
+            android:enabled="@{BlueMatchUtil.INSTANCE.kanConnectBlue(vm.bluetoothAddress)}"
+            android:onClick="@{click::searchBlue}"
+            android:text="@string/search_and_bond_bluetooth"
+            app:btn_radius="@dimen/widget_size_15"
+            app:layout_constraintBottom_toTopOf="@+id/btn_send"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <dyzn.csxc.yiliao.lib_common.widget.AppButton
+            android:id="@+id/btn_send"
+            style="@style/blue_button_style"
+            android:enabled="@{BlueMatchUtil.INSTANCE.kanSendMsg(vm.blueBondSuc,vm.wifiName,vm.wifiPassword)}"
+            android:onClick="@{click::sendWifiInfo}"
+            android:text="@string/send_info_to_bluetooth"
+            app:btn_radius="@dimen/widget_size_15"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

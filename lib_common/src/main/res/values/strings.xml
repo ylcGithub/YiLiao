@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="lib_common_name">lib_common</string>
+    <string name="bluetooth_connect">蓝牙连接</string>
+    <string name="qr_code_scanning">二维码扫描</string>
+    <string name="network_fail_please_click">当前网络不给力，请点击页面刷新</string>
+    <string name="it_is_empty">这里空空如也~</string>
+    <string name="search_and_bond_bluetooth">搜索并配对蓝牙</string>
+    <string name="connect_bluetooth">连接蓝牙</string>
+    <string name="send_info_to_bluetooth">向蓝牙发送WiFi信息</string>
+</resources>

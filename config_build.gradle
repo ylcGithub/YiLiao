@@ -1,0 +1,102 @@
+/**
+ * 关于整个项目(app/module)的通用gradle配置
+ */
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: "androidx.navigation.safeargs.kotlin"
+apply plugin: 'android-aspectjx'
+
+android {
+
+    compileSdkVersion rootProject.ext.android["compile_sdk_version"]
+    buildToolsVersion rootProject.ext.android["build_tools_version"]
+    //Android 6.0以上可以使用 http client,
+    useLibrary 'org.apache.http.legacy'
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android["min_sdk_version"]
+        targetSdkVersion rootProject.ext.android["target_sdk_version"]
+        versionCode rootProject.ext.android["version_code"]
+        versionName rootProject.ext.android["version_name"]
+        //开启分包 多个dex 防止方法数爆炸
+        multiDexEnabled true
+        flavorDimensions "version_code"
+        //支持的语言类型
+        resConfigs "zh-rCN", "zh-rHK", "zh-rTW", "en"
+
+        ndk { //设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
+            //微信、微博、QQ只保留了armeabi，Facebook、Twitter、Instagram只保留了armeabi-v7a
+            abiFilters "armeabi", "armeabi-v7a", "x86"
+        }
+    }
+
+    //这个是ARouter需要配置的kapt
+    kapt {
+        arguments {
+            arg("AROUTER_MODULE_NAME", project.getName())
+        }
+    }
+
+
+    buildTypes {
+        debug {
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            minifyEnabled false
+            shrinkResources false
+            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        release {
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+            minifyEnabled false
+            shrinkResources false
+            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    //开启viewBinding dataBinding
+    buildFeatures {
+        viewBinding true
+        dataBinding true
+    }
+
+    //生成libs目录
+    sourceSets {
+        main.jniLibs.srcDirs = ['libs']
+    }
+
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+
+    aspectjx{
+        // 排除一些第三方库的包名（Gson、 LeakCanary 和 AOP 有冲突）
+        // 否则就会起冲突：ClassNotFoundException: Didn't find class on path: DexPathList
+        exclude 'androidx', 'com.google', 'com.squareup', 'com.alipay', 'com.taobao',
+                'org.apache',
+                'org.jetbrains.kotlin',
+                'module-info', 'versions.9'
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    //test
+    testImplementation rootProject.ext.dependencies["junit"]
+    androidTestImplementation rootProject.ext.dependencies["android_junit"]
+    androidTestImplementation rootProject.ext.dependencies["espresso_core"]
+
+    implementation project(':lib_aop')
+    //glide
+    kapt rootProject.ext.dependencies["glide_compiler"]
+    //room
+    kapt rootProject.ext.dependencies["room_compiler"]
+    //ARouter
+    kapt rootProject.ext.dependencies["arouter_compiler"]
+}

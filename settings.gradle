@@ -1,0 +1,5 @@
+rootProject.name = "YiLiao"
+include ':app'
+include ':lib_aop'
+include ':lib_common'
+include ':bluetooth_module'
