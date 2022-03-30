@@ -2,12 +2,15 @@ package dyzn.csxc.yiliao.bluetooth.util
 
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
+import android.bluetooth.BluetoothSocket
 import com.jeremyliao.liveeventbus.LiveEventBus
+import com.orhanobut.hawk.Hawk
+import dyzn.csxc.yiliao.lib_common.config.HawkKey
 import dyzn.csxc.yiliao.lib_common.config.LiveBusKey
 import dyzn.csxc.yiliao.lib_common.expand.toast
 import dyzn.csxc.yiliao.lib_common.util.LogUtil
+import java.nio.charset.StandardCharsets
 import java.util.*
-import kotlin.math.log
 
 /**
  * @author YLC-D
@@ -42,16 +45,6 @@ object BluetoothUtils {
         } else "该手机没有蓝牙模块".toast()
     }
 
-    fun isBond(device: BluetoothDevice?): Boolean {
-        if (device == null) return false
-        var bond = false
-        val list = bondedDevices
-        for (d in list) {
-            if (d.address == device.address) bond = true
-        }
-        return bond
-    }
-
     /** 蓝牙配对  */
     fun createBond(btDevice: BluetoothDevice) {
         try {
@@ -64,48 +57,6 @@ object BluetoothUtils {
         }
     }
 
-    /** 反射来调用BluetoothDevice.removeBond取消设备的配对  */
-    fun removeDevice(device: BluetoothDevice?) {
-        device?.let {
-            try {
-                val removeBond = "removeBond"
-                val m = device.javaClass.getMethod(removeBond, null as Class<*>?)
-                m.invoke(device, null as Array<Any?>?)
-            } catch (e: Exception) {
-                LogUtil.log(e.toString())
-            }
-        }
-    }
-
-    /**
-     * 连接蓝牙
-     */
-    fun sendMsg(device: BluetoothDevice,name:String?,pwd:String?) {
-        Thread {
-            val sendMessage = ("<name>${name}</name>" +
-                    "<password>${pwd}</password>").trimIndent() //需要发送给配对蓝牙的数据
-            try {
-                val uuid = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
-                val socket = device.createRfcommSocketToServiceRecord(uuid)
-                socket.connect()
-                if (socket.isConnected) { //连接成功
-                    val os = socket.outputStream
-                    os.write(sendMessage.toByteArray())
-                    os.flush()
-                    LiveEventBus.get(LiveBusKey.BLUETOOTH_MSG_SEND_STATE,Boolean::class.java).post(true)
-                } else {
-                    //创建连接失败
-                    socket.close()
-                    LiveEventBus.get(LiveBusKey.BLUETOOTH_MSG_SEND_STATE,Boolean::class.java).post(false)
-                }
-            } catch (e: java.lang.Exception) {
-                e.printStackTrace()
-                LogUtil.log(e.toString())
-                LiveEventBus.get(LiveBusKey.BLUETOOTH_MSG_SEND_STATE,Boolean::class.java).post(false)
-            }
-        }.start()
-    }
-
     /** 获取本机已经绑定的蓝牙列表  */
     private val bondedDevices: List<BluetoothDevice>
         get() {
@@ -116,4 +67,74 @@ object BluetoothUtils {
             }
         }
 
+    /** 获取本机已绑定的蓝牙  */
+   private fun getMyDevice(): BluetoothDevice {
+        val myAddress = Hawk.get<String>(HawkKey.BLUETOOTH_ADDRESS)
+        val list = bondedDevices
+        for (d in list) {
+            if (d.address.lowercase() == myAddress.lowercase()) {
+               return d
+            }
+        }
+        throw RuntimeException("没有获取到蓝牙设备")
+    }
+    private var mSocket: BluetoothSocket? = null
+
+    /**
+     * 连接蓝牙
+     */
+    fun sendMsg(name: String?, pwd: String?) {
+        Thread {
+            val sendMessage = ("<name>${name}</name>" +
+                    "<password>${pwd}</password>").trimIndent() //需要发送给配对蓝牙的数据
+            try {
+                val device = getMyDevice()
+                val uuid = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
+                mSocket = device.createRfcommSocketToServiceRecord(uuid)
+                if (mSocket == null) throw RuntimeException("向蓝牙发送数据时，获取蓝牙socket失败")
+                mSocket!!.connect()
+                if (mSocket!!.isConnected) { //连接成功
+                    val os = mSocket!!.outputStream
+                    os.write(sendMessage.toByteArray())
+                    os.flush()
+                    os.close()
+                    getBlueResult()
+                } else {
+                    //创建连接失败
+                    mSocket!!.close()
+                    "蓝牙连接创建失败".toast()
+                }
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+                LogUtil.log(e.toString())
+            }
+        }.start()
+    }
+
+    private fun getBlueResult() {
+        var haveMsg = true
+        val result = StringBuilder()
+        try {
+            if (mSocket == null) throw RuntimeException("读取返回数据时，获取蓝牙socket失败")
+            val ins = mSocket!!.inputStream
+            while (haveMsg) {
+                val buffer = ByteArray(1024)
+                val count: Int = ins.read(buffer)
+                if (count > 0) {
+                    result.append(String(buffer, 0, count, StandardCharsets.UTF_8))
+                }
+                if (ins.available() == 0) {
+                    haveMsg = false
+                    LiveEventBus.get(LiveBusKey.BLUETOOTH_RESULT, String::class.java)
+                        .post(result.toString())
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            LogUtil.log(e.toString())
+        } finally {
+            mSocket?.close()
+            mSocket = null
+        }
+    }
 }

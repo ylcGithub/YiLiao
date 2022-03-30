@@ -12,6 +12,7 @@ object BlueMatchUtil {
     }
 
     fun kanSendMsg(blueConnected: Boolean, wifiName: String?, wifiPass: String?): Boolean {
-        return blueConnected && wifiName.isNullOrEmpty() && wifiPass.isNullOrEmpty()
+        return blueConnected && !wifiName.isNullOrEmpty() && !wifiPass.isNullOrEmpty()
     }
+
 }

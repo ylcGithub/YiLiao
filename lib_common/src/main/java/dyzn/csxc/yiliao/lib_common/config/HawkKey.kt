@@ -13,7 +13,7 @@ object HawkKey {
     /**
      * 当前用户要连接(连接成功)的蓝牙地址
      */
-    var ROBOT_BLUETOOTH_ADDRESS: String = "blue_bluetooth_address"
+    var BLUETOOTH_ADDRESS: String = "blue_bluetooth_address"
 
 
 }

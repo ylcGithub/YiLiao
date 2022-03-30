@@ -1,7 +1,6 @@
 package dyzn.csxc.yiliao.bluetooth.view.connect
 
 import android.bluetooth.BluetoothDevice
-import android.os.CountDownTimer
 import android.view.View
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.orhanobut.hawk.Hawk
@@ -17,7 +16,6 @@ import dyzn.csxc.yiliao.lib_common.config.HawkKey
 import dyzn.csxc.yiliao.lib_common.config.LiveBusKey
 import dyzn.csxc.yiliao.lib_common.config.RoutePath
 import dyzn.csxc.yiliao.lib_common.expand.toast
-import kotlin.concurrent.timer
 
 
 /**
@@ -37,17 +35,18 @@ class BluetoothConnectFragment :
     override fun initData() {
         mBinding.click = ClickProxy()
         mBinding.vm = mViewModel
-        //蓝牙接收广播 在MyDeviceModuleActivity注册的
-        if (mDevice != null) BluetoothUtils.cancelDiscovery()
         //监听 蓝牙绑定是否成功
         LiveEventBus.get(LiveBusKey.BLUETOOTH_BOND_SUCCESS, BluetoothDevice::class.java)
             .observe(this, {
-                mDevice = it
-                mViewModel.blueBondSuc.value = it != null
-                if (it != null) {
-                    mBinding.etWifiName.setText(WifiUtils.getCurrWifiName(mContext))
-                    mViewModel.cancelTimer()
-                }
+                mViewModel.blueBondSuc.value = true
+                dismissLoading()
+                mViewModel.cancelTimer()
+                mBinding.etWifiName.setText(WifiUtils.getCurrWifiName(mContext))
+                mViewModel.cancelTimer()
+            })
+        LiveEventBus.get(LiveBusKey.BLUETOOTH_RESULT,String::class.java)
+            .observe(this,{
+                "蓝牙返回数据：${it}".toast()
             })
     }
 
@@ -73,9 +72,10 @@ class BluetoothConnectFragment :
         @DoubleClickCheck
         fun searchBlue(@Suppress("UNUSED_PARAMETER") v: View) {
             if (BluetoothUtils.isEnabled) {
-                Hawk.put(HawkKey.ROBOT_BLUETOOTH_ADDRESS,mViewModel.bluetoothAddress.value)
+                Hawk.put(HawkKey.BLUETOOTH_ADDRESS,mViewModel.bluetoothAddress.value)
+                mViewModel.blueBondSuc.value =false
                 BluetoothUtils.startDiscovery()
-                showLoading("搜索蓝牙中....")
+                showLoading()
                 mViewModel.startTimer()
             } else "请打开蓝牙".toast()
         }
@@ -87,7 +87,7 @@ class BluetoothConnectFragment :
 
         @DoubleClickCheck
         fun sendWifiInfo(@Suppress("UNUSED_PARAMETER") v: View) {
-           BluetoothUtils.sendMsg(mDevice!!,mViewModel.wifiName.value,mViewModel.wifiPassword.value)
+           BluetoothUtils.sendMsg(mViewModel.wifiName.value,mViewModel.wifiPassword.value)
         }
     }
 }

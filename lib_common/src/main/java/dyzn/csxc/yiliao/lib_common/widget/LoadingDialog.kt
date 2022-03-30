@@ -8,14 +8,15 @@ import android.os.Build
 import android.os.Bundle
 import android.view.Window
 import android.view.WindowManager
-import android.widget.LinearLayout
 import dyzn.csxc.yiliao.lib_common.R
 
 /**
  *@author YLC-D
  *说明: 加载动画的dialog
  */
+@Suppress("DEPRECATION")
 class LoadingDialog private constructor(context: Context) : Dialog(context) {
+    private var tv: AppTextView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window?.requestFeature(Window.FEATURE_NO_TITLE)
@@ -59,12 +60,17 @@ class LoadingDialog private constructor(context: Context) : Dialog(context) {
             )
         }
 
+        tv = findViewById(R.id.tv_message)
     }
+
 
     fun show(text: String?) {
         show()
-        val tvMessage: AppTextView? = this.findViewById(R.id.tv_message)
-        tvMessage?.text = text ?: ""
+        tv?.text = text ?: ""
+    }
+
+    fun textChange(text: String?){
+        tv?.text = text
     }
 
     companion object {

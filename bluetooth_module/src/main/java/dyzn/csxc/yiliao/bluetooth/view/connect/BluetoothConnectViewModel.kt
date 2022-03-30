@@ -15,11 +15,8 @@ class BluetoothConnectViewModel : BaseViewModel() {
     val bluetoothAddress = MutableLiveData<String>()
     val wifiName = MutableLiveData<String>()
     val wifiPassword = MutableLiveData<String>()
-
     //绑定蓝牙成功
     val blueBondSuc = MutableLiveData(false)
-
-
     private var timer: CountDownTimer? = null
 
     /**
@@ -28,6 +25,7 @@ class BluetoothConnectViewModel : BaseViewModel() {
     fun startTimer() {
         timer = object : CountDownTimer(60 * 1000L, 1000L) {
             override fun onTick(millisUntilFinished: Long) {
+                loadingText.value = "蓝牙搜索中...(${millisUntilFinished/1000}s)"
             }
 
             override fun onFinish() {

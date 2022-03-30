@@ -7,5 +7,5 @@ package dyzn.csxc.yiliao.lib_common.config
 object LiveBusKey {
     const val SCAN_RESULT = "scan_activity_result"
     const val BLUETOOTH_BOND_SUCCESS = "bluetooth_bond_success"
-    const val BLUETOOTH_MSG_SEND_STATE = "bluetooth_msg_send_state"
+    const val BLUETOOTH_RESULT = "bluetooth_result"
 }

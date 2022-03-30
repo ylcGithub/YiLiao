@@ -25,7 +25,7 @@ object BluetoothReceiver : BroadcastReceiver() {
             // 获取查找到的蓝牙设备
             val device: BluetoothDevice? = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)
             //需要搜索到的蓝牙
-            val searchBlueAddress = Hawk.get(HawkKey.ROBOT_BLUETOOTH_ADDRESS, "")
+            val searchBlueAddress = Hawk.get(HawkKey.BLUETOOTH_ADDRESS, "")
             log("蓝牙名称：${device?.name},蓝牙地址：${device?.address}")
             //找到预期的蓝牙
             if(searchBlueAddress.lowercase() == device?.address?.lowercase()){
@@ -41,7 +41,7 @@ object BluetoothReceiver : BroadcastReceiver() {
         }else if(BluetoothDevice.ACTION_BOND_STATE_CHANGED == action) {
             // 获取到状态改变的蓝牙设备
             val device: BluetoothDevice? = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)
-            val currBlueAddress= Hawk.get(HawkKey.ROBOT_BLUETOOTH_ADDRESS, "")
+            val currBlueAddress= Hawk.get(HawkKey.BLUETOOTH_ADDRESS, "")
            if(currBlueAddress.lowercase() == device?.address?.lowercase()){
                when (device.bondState) {
                    BluetoothDevice.BOND_BONDING -> log("BluetoothConnectFragment: 蓝牙正在配对......")

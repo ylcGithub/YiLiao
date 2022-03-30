@@ -70,6 +70,9 @@ abstract class BaseFragment<VM : BaseViewModel, B : ViewDataBinding> : Fragment(
             if (it) dialog.show(mViewModel.loadingText.value)
             else dialog.dismiss()
         })
+        mViewModel.loadingText.observe(this,{
+             dialog.textChange(it)
+        })
         mViewModel.errorMsg.observe(this,{
             it.toast()
         })

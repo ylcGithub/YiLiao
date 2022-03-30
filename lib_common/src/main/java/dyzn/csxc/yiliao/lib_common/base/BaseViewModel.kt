@@ -40,10 +40,6 @@ open class BaseViewModel : ViewModel(), LifecycleObserver {
         data?.value = value
     }
 
-    fun runThread(work:suspend  CoroutineScope.()->Unit) = viewModelScope.launch(Dispatchers.IO){
-        work()
-    }
-
     fun getLoadingState(): LiveData<Boolean> {
         return showLoading
     }
