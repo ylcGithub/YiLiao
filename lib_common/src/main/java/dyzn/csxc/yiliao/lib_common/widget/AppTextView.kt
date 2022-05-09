@@ -6,7 +6,6 @@ import android.content.res.ColorStateList
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.RippleDrawable
 import android.graphics.drawable.StateListDrawable
-import android.os.Build
 import android.util.AttributeSet
 import androidx.annotation.ColorInt
 import androidx.appcompat.widget.AppCompatTextView
@@ -118,10 +117,10 @@ open class AppTextView @JvmOverloads constructor(
     }
 
     private fun setBgSelector() {
-        if (bgColor != 0) {
+        if (bgColor != 0 || strokeWidth !=0) {
             val bg = StateListDrawable()
             initBgDrawable()
-            background = if (Build.VERSION.SDK_INT >= 21 && isRippleEnable && isEnabled) {
+            background = if (isRippleEnable && isEnabled) {
                 RippleDrawable(
                     getColorSelector(
                         bgColor,

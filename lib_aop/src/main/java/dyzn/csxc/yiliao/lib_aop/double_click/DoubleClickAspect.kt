@@ -29,7 +29,7 @@ class DoubleClickAspect {
         if(!method.isAnnotationPresent(DoubleClickCheck::class.java)){
             return
         }
-        val aopClick = method.getAnnotation(DoubleClickCheck::class.java)
+        val aopClick:DoubleClickCheck = method.getAnnotation(DoubleClickCheck::class.java)!!
         if(!aopClick.canDoubleClick&&!DoubleClickUtil.isFastDoubleClick(aopClick.mills)){
             joinPoint.proceed()
         }else if(aopClick.canDoubleClick && DoubleClickUtil.isFastDoubleClick(aopClick.mills)){

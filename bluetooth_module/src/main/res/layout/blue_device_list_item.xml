@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingDefaultResource">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ll_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="@dimen/widget_size_6">
+
+        <dyzn.csxc.yiliao.lib_common.widget.AppImageView
+            android:id="@+id/iv_avatar"
+            android:layout_width="@dimen/widget_size_40"
+            android:layout_height="@dimen/widget_size_40"
+            android:background="@drawable/blue_bluetooth_icon_bg"
+            android:padding="@dimen/widget_size_10"
+            android:src="@drawable/blue_icon_bluetooth"
+            app:fillet_radius="@dimen/widget_size_20"
+            app:is_circle="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <dyzn.csxc.yiliao.lib_common.widget.AppTextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/widget_size_6"
+            android:textColor="@color/color_333"
+            android:textSize="@dimen/font_size_18"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/iv_avatar"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="塑料袋副科级" />
+
+        <dyzn.csxc.yiliao.lib_common.widget.AppTextView
+            android:id="@+id/tv_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/widget_size_6"
+            android:layout_marginTop="@dimen/widget_size_3"
+            android:textColor="@color/color_666"
+            android:textSize="@dimen/font_size_16"
+            app:layout_constraintStart_toEndOf="@+id/iv_avatar"
+            app:layout_constraintTop_toBottomOf="@+id/tv_name"
+            tools:text="22222222222222" />
+
+        <dyzn.csxc.yiliao.lib_common.widget.AppTextView
+            android:id="@+id/tv_bond_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_666"
+            android:textSize="@dimen/font_size_16"
+            android:layout_marginTop="@dimen/widget_size_3"
+            app:layout_constraintStart_toStartOf="@+id/tv_address"
+            app:layout_constraintTop_toBottomOf="@+id/tv_address"
+            tools:text="未绑定" />
+
+        <dyzn.csxc.yiliao.lib_common.widget.AppTextView
+            android:id="@+id/tv_rssi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_666"
+            android:textSize="@dimen/font_size_16"
+            android:layout_marginTop="@dimen/widget_size_3"
+            android:layout_marginStart="@dimen/widget_size_13"
+            app:layout_constraintEnd_toEndOf="@+id/tv_address"
+            app:layout_constraintTop_toBottomOf="@+id/tv_address"
+            tools:text="99" />
+        <dyzn.csxc.yiliao.lib_common.widget.AppTextView
+            android:id="@+id/tv_uuids"
+            app:layout_constraintStart_toStartOf="@+id/tv_address"
+            app:layout_constraintEnd_toEndOf="@+id/tv_address"
+            app:layout_constraintTop_toBottomOf="@+id/tv_bond_state"
+            android:textColor="@color/color_666"
+            android:textSize="@dimen/font_size_16"
+            tools:text="uuids:0xFFE0"
+            android:layout_marginTop="@dimen/widget_size_3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <dyzn.csxc.yiliao.lib_common.widget.AppTextView
+            android:id="@+id/tv_firm_id"
+            app:layout_constraintStart_toStartOf="@+id/tv_address"
+            app:layout_constraintEnd_toEndOf="@+id/tv_address"
+            app:layout_constraintTop_toBottomOf="@+id/tv_uuids"
+            android:textColor="@color/color_666"
+            android:textSize="@dimen/font_size_16"
+            tools:text="厂商ID:0X004C"
+            android:layout_marginTop="@dimen/widget_size_3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <dyzn.csxc.yiliao.lib_common.widget.AppTextView
+            android:id="@+id/tv_firm_data"
+            app:layout_constraintStart_toStartOf="@+id/tv_address"
+            app:layout_constraintTop_toBottomOf="@+id/tv_firm_id"
+            android:textColor="@color/color_666"
+            android:textSize="@dimen/font_size_16"
+            tools:text="厂商数据:0X004A090234FE5C"
+            android:layout_marginTop="@dimen/widget_size_3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <dyzn.csxc.yiliao.lib_common.widget.AppTextView
+            android:id="@+id/tv_service_data"
+            app:layout_constraintStart_toStartOf="@+id/tv_address"
+            app:layout_constraintTop_toBottomOf="@+id/tv_firm_data"
+            android:textColor="@color/color_666"
+            android:textSize="@dimen/font_size_16"
+            tools:text="服务数据:0X004A090234FE5C"
+            android:layout_marginTop="@dimen/widget_size_3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <dyzn.csxc.yiliao.lib_common.widget.AppButton
+            android:id="@+id/btn_connect"
+            android:layout_width="@dimen/widget_size_100"
+            android:layout_height="@dimen/widget_size_45"
+            android:text="@string/blue_connect"
+            android:textSize="@dimen/font_size_18"
+            app:btn_pressed_color="@color/color_main_blue_light"
+            app:btn_radius="@dimen/widget_size_10"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <dyzn.csxc.yiliao.lib_common.widget.AppButton
+            android:id="@+id/btn_raw"
+            android:layout_width="@dimen/widget_size_100"
+            android:layout_height="@dimen/widget_size_45"
+            android:text="@string/blue_raw"
+            android:textSize="@dimen/font_size_18"
+            app:btn_pressed_color="@color/color_main_blue_light"
+            app:btn_radius="@dimen/widget_size_10"
+            android:layout_marginTop="@dimen/widget_size_45"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_connect" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

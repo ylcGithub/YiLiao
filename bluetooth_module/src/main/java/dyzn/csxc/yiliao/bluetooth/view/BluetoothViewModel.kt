@@ -1,5 +1,6 @@
 package dyzn.csxc.yiliao.bluetooth.view
 
+import androidx.lifecycle.MutableLiveData
 import dyzn.csxc.yiliao.lib_common.base.BaseViewModel
 
 /**
@@ -8,5 +9,5 @@ import dyzn.csxc.yiliao.lib_common.base.BaseViewModel
  *说明:
  */
 class BluetoothViewModel:BaseViewModel() {
-
+    val quitApp = MutableLiveData(false)
 }

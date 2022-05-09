@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'android-aspectjx'
 }
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion rootProject.ext.android["compile_sdk_version"]
@@ -12,8 +13,6 @@ android {
     defaultConfig {
         minSdkVersion rootProject.ext.android["min_sdk_version"]
         targetSdkVersion rootProject.ext.android["target_sdk_version"]
-        versionCode rootProject.ext.android["version_code"]
-        versionName rootProject.ext.android["version_name"]
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -42,4 +41,9 @@ dependencies {
     androidTestImplementation rootProject.ext.dependencies["espresso_core"]
 
     api project(':lib_common')
+    implementation  rootProject.ext.dependencies["core_ktx"]
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+repositories {
+    mavenCentral()
 }

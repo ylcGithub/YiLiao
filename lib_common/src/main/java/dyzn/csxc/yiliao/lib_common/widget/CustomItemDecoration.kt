@@ -6,16 +6,13 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.view.View
 import androidx.annotation.ColorInt
-import androidx.annotation.ColorRes
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import dyzn.csxc.yiliao.lib_common.util.LogUtil
-import kotlin.math.log
 
 /**
  *@author YLC-D
- *说明:
+ *说明:自定义的列表分割线
  */
 class CustomItemDecoration(val type: Type, @ColorInt val color: Int = Color.TRANSPARENT) :
     RecyclerView.ItemDecoration() {

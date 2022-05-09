@@ -1,6 +1,12 @@
 <resources>
     <string name="blue_app_name">蓝牙模块</string>
-    <string name="blue_please_input_bluetooth_address">请输入蓝牙的地址</string>
-    <string name="blue_please_input_wifi_name">请输入WiFi名称</string>
-    <string name="blue_please_input_wifi_password">请输入WiFi密码</string>
+    <string name="blue_input_send_msg">输入发送消息</string>
+    <string name="blue_send">发送</string>
+    <string name="blue_send_msg">发送消息</string>
+    <string name="blue_search_blue_tooth">搜索蓝牙</string>
+    <string name="blue_search">扫描</string>
+    <string name="blue_connect">链接</string>
+    <string name="blue_raw">RAW</string>
+    <string name="blue_raw_data">原始数据</string>
+    <string name="blue_data_detail">数据详情</string>
 </resources>

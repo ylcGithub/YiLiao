@@ -157,6 +157,11 @@ abstract class BaseOneLayoutAdapter<E, VB : ViewDataBinding>(@LayoutRes val layo
     fun deleteItem(position: Int) {
         dataList.removeAt(position)
         notifyItemRemoved(position)
-        notifyDataSetChanged()
+    }
+
+    fun deleteAllItem() {
+        val count = dataList.size
+        dataList.clear()
+        notifyItemRangeRemoved(0, count)
     }
 }

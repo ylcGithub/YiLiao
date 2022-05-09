@@ -1,4 +1,5 @@
 apply from: "../component_build.gradle"
+apply plugin: 'kotlin-android'
 
 android {
     resourcePrefix "blue_" //给 Module 内的资源名增加前缀, 避免资源名冲突
@@ -22,4 +23,9 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation  rootProject.ext.dependencies["core_ktx"]
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+repositories {
+    mavenCentral()
 }

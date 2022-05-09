@@ -22,6 +22,8 @@ class AppImageView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : AppCompatImageView(context, attrs, defStyleAttr) {
     private val pressedColor: Int
+
+    //排除某个方向 或者 几个方向 不显示圆角
     private val excludeDirection: Int
 
     //宽高比值 比值为1 表示 高度等于宽度 默认没有改变控件高度，设置后才改变
@@ -57,7 +59,7 @@ class AppImageView @JvmOverloads constructor(
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.AppImageView)
         pressedColor = typedArray.getColor(
             R.styleable.AppImageView_image_pressed_color,
-            getColor(R.color.image_press_color,context)
+            getColor(R.color.image_press_color, context)
         )
         excludeDirection = typedArray.getInt(R.styleable.AppImageView_exclude_direction, 0)
         aspectRatio = typedArray.getFloat(R.styleable.AppImageView_aspect_ratio, -1f)
@@ -135,9 +137,9 @@ class AppImageView @JvmOverloads constructor(
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
         // 圆角图片的范围
-        if (roundRectF != null) {
-            roundRectF!![0f, 0f, w.toFloat()] = h.toFloat()
-        }
+        if (roundRectF != null) roundRectF!!.set(0f, 0f, w.toFloat(), h.toFloat())
+        //圆半径
+        if (isCircle) filletRadius = min(w, h) / 2
     }
 
     override fun onDraw(canvas: Canvas) {

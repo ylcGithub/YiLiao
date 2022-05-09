@@ -62,12 +62,12 @@ abstract class BaseMvvmActivity<VM : BaseViewModel, B : ViewDataBinding> : BaseA
     }
 
     private fun loadingInit(){
-        mViewModel.getLoadingState().observe(this, {
+        mViewModel.getLoadingState().observe(this) {
             if (it) dialog.show(mViewModel.loadingText.value)
             else dialog.dismiss()
-        })
-        mViewModel.errorMsg.observe(this,{
+        }
+        mViewModel.errorMsg.observe(this) {
             it.toast()
-        })
+        }
     }
 }

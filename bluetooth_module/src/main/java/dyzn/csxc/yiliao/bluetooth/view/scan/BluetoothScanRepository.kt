@@ -1,4 +1,4 @@
-package dyzn.csxc.yiliao.bluetooth.view.connect
+package dyzn.csxc.yiliao.bluetooth.view.scan
 
 import dyzn.csxc.yiliao.lib_common.base.BaseRepository
 import kotlinx.coroutines.CoroutineScope
@@ -8,6 +8,6 @@ import kotlinx.coroutines.CoroutineScope
  *@create on 2022/3/14 10
  *说明:
  */
-class BluetoothConnectRepository(private val viewModel: BluetoothConnectViewModel, scope: CoroutineScope) :
+class BluetoothScanRepository(private val viewModel: BluetoothScanViewModel, scope: CoroutineScope) :
     BaseRepository(viewModel, scope) {
 }

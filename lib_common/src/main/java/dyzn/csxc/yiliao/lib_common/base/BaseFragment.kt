@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
@@ -66,19 +67,19 @@ abstract class BaseFragment<VM : BaseViewModel, B : ViewDataBinding> : Fragment(
      * 预置的一些初始化操作
      */
     private fun init() {
-        mViewModel.getLoadingState().observe(this, {
+        mViewModel.getLoadingState().observe(this) {
             if (it) dialog.show(mViewModel.loadingText.value)
             else dialog.dismiss()
-        })
-        mViewModel.loadingText.observe(this,{
-             dialog.textChange(it)
-        })
-        mViewModel.errorMsg.observe(this,{
+        }
+        mViewModel.loadingText.observe(this) {
+            dialog.textChange(it)
+        }
+        mViewModel.errorMsg.observe(this) {
             it.toast()
-        })
-        mViewModel.pageBack.observe(this,{
+        }
+        mViewModel.pageBack.observe(this) {
             pageBack()
-        })
+        }
     }
 
     abstract fun getViewModel(): VM
@@ -91,7 +92,7 @@ abstract class BaseFragment<VM : BaseViewModel, B : ViewDataBinding> : Fragment(
         return mFragmentProvider
     }
 
-    protected open fun getActivityViewModelProvider(activity: AppCompatActivity): ViewModelProvider {
+    protected open fun getActivityViewModelProvider(activity: FragmentActivity): ViewModelProvider {
         if (!this::mActivityProvider.isInitialized) mActivityProvider = ViewModelProvider(activity)
         return mActivityProvider
     }

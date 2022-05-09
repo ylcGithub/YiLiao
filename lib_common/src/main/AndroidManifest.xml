@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
@@ -15,4 +16,8 @@
             android:screenOrientation="portrait"
             android:label="@string/qr_code_scanning"/>
     </application>
+
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
+        android:required="false" />
 </manifest>

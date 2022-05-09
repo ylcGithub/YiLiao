@@ -13,7 +13,6 @@ import dyzn.csxc.yiliao.lib_common.bean.common.SelectedBean
 import dyzn.csxc.yiliao.lib_common.databinding.SelectedStringItemBinding
 import dyzn.csxc.yiliao.lib_common.databinding.SelectedStringPopBinding
 import dyzn.csxc.yiliao.lib_common.expand.setItemDecoration
-import dyzn.csxc.yiliao.lib_common.expand.toast
 import dyzn.csxc.yiliao.lib_common.util.LayoutManagerUtil
 import dyzn.csxc.yiliao.lib_common.util.ResUtil
 
@@ -69,7 +68,7 @@ class SelectedStringPopWindow(context: Context) :
                 clearSelected()
                 dataList[holder.adapterPosition].selected = true
                 selectedListener?.selected(dataList[holder.adapterPosition])
-                notifyDataSetChanged()
+                notifyItemChanged(holder.adapterPosition)
             }
             binding.title.text = item.title
             binding.ivSelected.visibility = if (item.selected) View.VISIBLE else View.GONE

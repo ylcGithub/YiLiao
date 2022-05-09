@@ -2,10 +2,8 @@ package dyzn.csxc.yiliao.lib_common.widget
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
-import android.view.Gravity
 import androidx.annotation.ColorInt
 import androidx.appcompat.widget.AppCompatEditText
 import dyzn.csxc.yiliao.lib_common.R
@@ -40,7 +38,6 @@ class AppEditText @JvmOverloads constructor(
             //避免自定义editText无法获取焦点
             isFocusableInTouchMode = true
         }
-        gravity = Gravity.CENTER_VERTICAL
         val ta = context.obtainStyledAttributes(attrs, R.styleable.AppEditText)
         underLineColor = ta.getColor(R.styleable.AppEditText_under_line_color, -1)
         underLineHeight = ta.getDimensionPixelSize(R.styleable.AppEditText_under_line_height, 2)

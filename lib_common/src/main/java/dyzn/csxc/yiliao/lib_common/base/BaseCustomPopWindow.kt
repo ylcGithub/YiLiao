@@ -15,7 +15,7 @@ import razerdp.basepopup.BasePopupWindow
  */
 abstract class BaseCustomPopWindow<VB : ViewBinding>(context: Context,width:Int = 0,height:Int = 0) : BasePopupWindow(context,width,height) {
 
-    protected var mBind: VB? = null
+    protected lateinit var mBind: VB
 
     init {
         initBinding()

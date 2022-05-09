@@ -1,14 +1,28 @@
 apply from: "config.gradle"
 
 buildscript {
-    ext.kotlin_version = "1.5.10"
-    ext.nav_version = "2.2.2"
+    ext.kotlin_version = '1.6.21'
+    ext.nav_version = '2.4.1'
     repositories {
-        google()
-        maven{url 'http://maven.aliyun.com/nexus/content/groups/public/'}
+        maven {
+            allowInsecureProtocol = true
+            url 'https://maven.aliyun.com/repository/public'
+        }
+        maven {
+            allowInsecureProtocol = true
+            url 'https://maven.aliyun.com/repository/google/'
+        }
+        maven {
+            allowInsecureProtocol = true
+            url 'https://maven.aliyun.com/repository/gradle-plugin/'
+        }
+        maven {
+            allowInsecureProtocol = true
+            url "https://jitpack.io"
+        }
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:4.2.2"
+        classpath 'com.android.tools.build:gradle:7.1.3'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
         //AOP面向切面编程的库
@@ -18,9 +32,22 @@ buildscript {
 
 allprojects {
     repositories {
-        google()
-        maven { url 'https://jitpack.io' }
-        maven{url 'http://maven.aliyun.com/nexus/content/groups/public/'}
+        maven {
+            allowInsecureProtocol = true
+            url 'https://maven.aliyun.com/repository/public'
+        }
+        maven {
+            allowInsecureProtocol = true
+            url 'https://maven.aliyun.com/repository/google/'
+        }
+        maven {
+            allowInsecureProtocol = true
+            url 'https://maven.aliyun.com/repository/gradle-plugin/'
+        }
+        maven {
+            allowInsecureProtocol = true
+            url "https://jitpack.io"
+        }
     }
 }
 

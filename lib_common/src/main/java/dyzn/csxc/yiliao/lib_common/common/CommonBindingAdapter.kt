@@ -1,12 +1,12 @@
 package dyzn.csxc.yiliao.lib_common.common
 
-import android.text.Editable
 import android.view.View
 import android.widget.EditText
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.MutableLiveData
-import dyzn.csxc.yiliao.lib_common.widget.AppTitle
 import dyzn.csxc.yiliao.lib_common.widget.AppProgressView
+import dyzn.csxc.yiliao.lib_common.widget.AppTitle
 
 /**
  *@author YLC-D
@@ -68,4 +68,10 @@ fun setProgressViewSchedule(view:AppProgressView, schedule:Int){
 @BindingAdapter("progressHintText")
 fun setProgressViewHintText(view:AppProgressView, hintText:String?){
     view.setShowText(hintText)
+}
+
+//TextView的选中方法
+@BindingAdapter("textSelected")
+fun setTextViewSelected(tv:TextView,selected:Boolean){
+    tv.isSelected = selected
 }

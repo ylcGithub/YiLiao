@@ -8,4 +8,5 @@
     <string name="search_and_bond_bluetooth">搜索并配对蓝牙</string>
     <string name="connect_bluetooth">连接蓝牙</string>
     <string name="send_info_to_bluetooth">向蓝牙发送WiFi信息</string>
+    <string name="sure">确定</string>
 </resources>

@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 apply from: "../config_build.gradle"
 
 android {
@@ -43,4 +44,9 @@ dependencies {
     if (!isBuildModule.toBoolean()) {
         implementation project(':bluetooth_module')
     }
+    implementation "androidx.core:core-ktx:1.3.2"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+repositories {
+    mavenCentral()
 }
