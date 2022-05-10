@@ -28,7 +28,7 @@ abstract class BaseMvvmActivity<VM : BaseViewModel, B : ViewDataBinding> : BaseA
         mBinding.lifecycleOwner = this
         mViewModel = getViewModel()
         lifecycle.addObserver(mViewModel)
-
+        AppManager.addActivity(this)
         //用来解析通过ARouter传递的参数，使用 @Autowired 注解
         ARouter.getInstance().inject(this)
     }
@@ -66,8 +66,12 @@ abstract class BaseMvvmActivity<VM : BaseViewModel, B : ViewDataBinding> : BaseA
             if (it) dialog.show(mViewModel.loadingText.value)
             else dialog.dismiss()
         }
+        mViewModel.loadingText.observe(this) {
+            dialog.textChange(it)
+        }
         mViewModel.errorMsg.observe(this) {
             it.toast()
         }
+
     }
 }

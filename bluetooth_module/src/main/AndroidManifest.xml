@@ -7,6 +7,9 @@
             android:name=".view.BluetoothActivity"
             android:label="蓝牙模块"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.connect.BluetoothConnectActivity"
+            android:label="连接蓝牙" />
     </application>
 
 </manifest>

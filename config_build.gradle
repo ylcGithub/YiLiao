@@ -28,12 +28,12 @@ android {
             //微信、微博、QQ只保留了armeabi，Facebook、Twitter、Instagram只保留了armeabi-v7a
             abiFilters "armeabi", "armeabi-v7a", "x86"
         }
-    }
 
-    //这个是ARouter需要配置的kapt
-    kapt {
-        arguments {
-            arg("AROUTER_MODULE_NAME", project.getName())
+        //这个是ARouter需要配置的kapt
+        kapt {
+            arguments {
+                arg("AROUTER_MODULE_NAME", project.getName())
+            }
         }
     }
 
@@ -94,9 +94,9 @@ dependencies {
 
     implementation project(':lib_aop')
     //glide
-    kapt rootProject.ext.dependencies["glide_compiler"]
+    annotationProcessor  rootProject.ext.dependencies["glide_compiler"]
     //room
-    kapt rootProject.ext.dependencies["room_compiler"]
+    annotationProcessor  rootProject.ext.dependencies["room_compiler"]
     //ARouter
-    kapt rootProject.ext.dependencies["arouter_compiler"]
+//    annotationProcessor  rootProject.ext.dependencies["arouter_compiler"]
 }

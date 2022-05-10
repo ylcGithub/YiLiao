@@ -26,14 +26,11 @@
         <dyzn.csxc.yiliao.lib_common.widget.AppTitle
             android:id="@+id/app_title"
             titleBackListener="@{()->click.back()}"
-            titleOneTextListener="@{()->click.resetSearch()}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:title="@string/blue_scan_blue_tooth"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:right_one_text="@string/blue_search"
-            app:right_one_text_pressed_color="@color/color_666"
-            app:title="@string/bluetooth_connect" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rc_ble_list"
@@ -42,7 +39,6 @@
             android:layout_marginStart="@dimen/widget_size_10"
             android:layout_marginEnd="@dimen/widget_size_10"
             android:layout_marginBottom="@dimen/widget_size_60"
-            android:visibility="@{vm.search?View.VISIBLE:View.GONE}"
             app:layout_constraintTop_toBottomOf="@+id/app_title" />
 
         <dyzn.csxc.yiliao.lib_common.widget.AppButton
@@ -50,40 +46,14 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/widget_size_45"
             android:layout_margin="@dimen/widget_size_20"
-            android:onClickListener="@{click::searchBlue}"
+            android:onClickListener="@{()->click.searchBlue()}"
             android:text="@string/blue_search_blue_tooth"
             android:textColor="@color/white"
             android:textSize="@dimen/font_size_18"
-            android:visibility="@{vm.search?View.VISIBLE:View.GONE}"
             app:btn_radius="@dimen/widget_size_4"
             app:layout_constraintBottom_toBottomOf="parent"
             tools:ignore="TextContrastCheck"
             tools:layout_editor_absoluteX="20dp" />
 
-        <dyzn.csxc.yiliao.lib_common.widget.AppEditText
-            android:id="@+id/et_msg"
-            style="@style/blue_et_style"
-            afterTextChanged="@{vm.msg}"
-            android:hint="@string/blue_input_send_msg"
-            android:visibility="@{vm.send?View.VISIBLE:View.GONE}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/app_title"
-            app:under_line_color="@color/color_main_blue"
-            app:under_line_height="@dimen/widget_size_3" />
-
-        <dyzn.csxc.yiliao.lib_common.widget.AppButton
-            android:id="@+id/btn_send"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/widget_size_45"
-            android:layout_margin="@dimen/widget_size_20"
-            android:onClickListener="@{click::clickSendMsg}"
-            android:text="@string/blue_send"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_size_18"
-            android:visibility="@{vm.send?View.VISIBLE:View.GONE}"
-            app:btn_radius="@dimen/widget_size_4"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:ignore="TextContrastCheck"
-            tools:layout_editor_absoluteX="20dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

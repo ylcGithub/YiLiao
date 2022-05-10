@@ -112,14 +112,15 @@ object BluetoothUtils {
         return true
     }
 
+    private var timer:CountDownTimer?= null
     private fun startTimer() {
-        val timer = object : CountDownTimer(SCAN_PERIOD, 1000L) {
+        timer = object : CountDownTimer(SCAN_PERIOD, 1000L) {
             override fun onTick(millisUntilFinished: Long) {}
             override fun onFinish() {
                 stopScanBle()
             }
         }
-        timer.start()
+        timer?.start()
     }
 
     /**
@@ -195,7 +196,7 @@ object BluetoothUtils {
                 it.flushPendingScanResults(leScanCallback)
                 //关闭扫描
                 it.stopScan(leScanCallback)
-
+                timer?.cancel()
                 LiveEventBus.get<Boolean>(LiveBusKey.SCAN_BLUE_STOP).post(true)
             }
         }

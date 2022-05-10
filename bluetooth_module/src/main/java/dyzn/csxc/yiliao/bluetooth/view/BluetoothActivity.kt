@@ -6,7 +6,7 @@ import dyzn.csxc.yiliao.lib_common.base.BaseActivity
 import dyzn.csxc.yiliao.lib_common.config.RoutePath
 import dyzn.csxc.yiliao.lib_common.util.AppManager
 
-@Route(path = RoutePath.BlUETOOTH_ACTIVITY)
+@Route(path = RoutePath.BlUE_TOOTH_ACTIVITY)
 class BluetoothActivity : BaseActivity(){
     private lateinit var model: BluetoothViewModel
     override fun getLayoutId(): Int = R.layout.blue_activity_bluetooth

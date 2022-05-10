@@ -4,6 +4,7 @@
     <string name="blue_send">发送</string>
     <string name="blue_send_msg">发送消息</string>
     <string name="blue_search_blue_tooth">搜索蓝牙</string>
+    <string name="blue_scan_blue_tooth">扫描蓝牙</string>
     <string name="blue_search">扫描</string>
     <string name="blue_connect">链接</string>
     <string name="blue_raw">RAW</string>

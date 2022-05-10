@@ -2,7 +2,6 @@ package dyzn.csxc.yiliao.bluetooth.core
 
 import android.annotation.SuppressLint
 import android.bluetooth.le.ScanRecord
-import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import dyzn.csxc.yiliao.bluetooth.R
 import dyzn.csxc.yiliao.bluetooth.bean.ADStructure
@@ -37,7 +36,7 @@ class BlueDeviceListAdapter :
         binding.tvUuids.text = getUUID(item.scanRecord,mADStructureArray)
         setFirmData(binding.tvFirmId,binding.tvFirmData,item.scanRecord,mADStructureArray)
         setServiceData(binding.tvServiceData,item.scanRecord,mADStructureArray)
-        binding.llBox.setOnClickListener { l?.invoke(it) }
+        binding.btnConnect.setOnClickListener { l?.invoke(item) }
         binding.btnRaw.setOnClickListener {
             ShowRawDataPop(BaseApplication.getAppContext(),raw,mADStructureArray).showPopupWindow()
         }
@@ -92,8 +91,8 @@ class BlueDeviceListAdapter :
         }
     }
 
-    private var l: ((View) -> Unit)? = null
-    fun setItemListener(listener: (v: View) -> Unit) {
+    private var l: ((BlueDevice) -> Unit)? = null
+    fun setConnectClickListener(listener: (bd: BlueDevice) -> Unit) {
         l = listener
     }
 

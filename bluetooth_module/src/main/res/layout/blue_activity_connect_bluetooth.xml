@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <variable
+            name="vm"
+            type="dyzn.csxc.yiliao.bluetooth.view.connect.BluetoothConnectViewModel" />
+
+        <variable
+            name="click"
+            type="dyzn.csxc.yiliao.bluetooth.view.connect.BluetoothConnectActivity.ClickProxy" />
 
     </data>
 
@@ -9,5 +19,41 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <dyzn.csxc.yiliao.lib_common.widget.AppTitle
+            android:id="@+id/app_title"
+            titleBackListener="@{()->click.back()}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcv_services"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/et_msg"
+            app:layout_constraintTop_toBottomOf="@+id/app_title" />
+
+        <dyzn.csxc.yiliao.lib_common.widget.AppEditText
+            android:id="@+id/et_msg"
+            style="@style/blue_et_style"
+            afterTextChanged="@{vm.msg}"
+            android:hint="@string/blue_input_send_msg"
+            app:layout_constraintBottom_toTopOf="@+id/btn_send"
+            app:layout_constraintStart_toStartOf="parent"
+            app:under_line_color="@color/color_main_blue"
+            app:under_line_height="@dimen/widget_size_3" />
+
+        <dyzn.csxc.yiliao.lib_common.widget.AppButton
+            android:id="@+id/btn_send"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/widget_size_45"
+            android:text="@string/blue_send"
+            android:onClickListener="@{()->click.sendMsg()}"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_size_18"
+            app:btn_radius="@dimen/widget_size_4"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:ignore="TextContrastCheck"
+            tools:layout_editor_absoluteX="20dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

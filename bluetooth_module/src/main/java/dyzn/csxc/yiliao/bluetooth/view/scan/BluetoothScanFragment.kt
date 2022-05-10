@@ -1,6 +1,6 @@
 package dyzn.csxc.yiliao.bluetooth.view.scan
 
-import android.view.View
+import android.os.Bundle
 import com.jeremyliao.liveeventbus.LiveEventBus
 import dyzn.csxc.yiliao.bluetooth.R
 import dyzn.csxc.yiliao.bluetooth.core.BlueDeviceListAdapter
@@ -12,6 +12,7 @@ import dyzn.csxc.yiliao.lib_aop.permission.ant.PermissionDefied
 import dyzn.csxc.yiliao.lib_aop.permission.ant.PermissionNeed
 import dyzn.csxc.yiliao.lib_common.base.BaseFragment
 import dyzn.csxc.yiliao.lib_common.config.LiveBusKey
+import dyzn.csxc.yiliao.lib_common.config.RoutePath
 import dyzn.csxc.yiliao.lib_common.expand.toast
 import dyzn.csxc.yiliao.lib_common.util.LayoutManagerUtil
 import dyzn.csxc.yiliao.lib_common.util.ResUtil
@@ -44,11 +45,12 @@ class BluetoothScanFragment :
                 it.mostTop = 4
             }
         )
-        ada.setItemListener {
-            mViewModel.search.value = false
-            mViewModel.send.value = true
+        ada.setConnectClickListener {
             BluetoothUtils.stopScanBle()
-            //链接点击的蓝牙
+            val bundle = Bundle()
+            bundle.putString("deviceName",it.device.name)
+            bundle.putString("deviceAddress",it.device.address)
+            toNextActivity(RoutePath.CONNECT_BlUE_TOOTH_ACTIVITY,bundle)
         }
         BluetoothUtils.setOnListener {
             ada.updateList(it, true)
@@ -64,31 +66,16 @@ class BluetoothScanFragment :
         fun back() {
             bvm.pageBack
         }
-
-        fun resetSearch() {
-            mViewModel.search.value = true
-            mViewModel.send.value = false
-        }
-
         @PermissionNeed(permissions = [
             android.Manifest.permission.ACCESS_COARSE_LOCATION,
             android.Manifest.permission.ACCESS_FINE_LOCATION], 102)
         @DoubleClickCheck
-        fun searchBlue(v: View) {
-            mViewModel.search.value = true
-            mViewModel.send.value = false
+        fun searchBlue() {
             if (BluetoothUtils.startScanBle(mContext)) showLoading("蓝牙扫描中....")
         }
-
         @PermissionDefied(requestCode = 102)
         fun denyPer() {
             "拒绝定位无法搜索到附近的蓝牙设备".toast()
-        }
-
-        @DoubleClickCheck
-        fun clickSendMsg(v: View) {
-            val msg = mBinding.etMsg.text.toString()
-            msg.toast()
         }
     }
 }

@@ -6,6 +6,7 @@ import dyzn.csxc.yiliao.lib_aop.permission.ant.PermissionDefied
 import dyzn.csxc.yiliao.lib_aop.permission.ant.PermissionNeed
 import dyzn.csxc.yiliao.lib_aop.permission.setting.PerSetUtil
 import dyzn.csxc.yiliao.lib_common.base.BaseActivity
+import dyzn.csxc.yiliao.lib_common.config.RoutePath
 import dyzn.csxc.yiliao.lib_common.expand.toast
 
 class MainActivity : BaseActivity() {
@@ -13,7 +14,7 @@ class MainActivity : BaseActivity() {
 
     override fun initData() {
         findViewById<TextView>(R.id.tv_text).setOnClickListener {
-            test()
+            toNextActivity(RoutePath.BlUE_TOOTH_ACTIVITY)
         }
     }
 

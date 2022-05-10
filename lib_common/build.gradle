@@ -101,8 +101,6 @@ dependencies {
     api rootProject.ext.dependencies["base_pop"]
     //zxing
     api rootProject.ext.dependencies["zxing"]
-    implementation "androidx.core:core-ktx:1.3.2"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
 }
 repositories {

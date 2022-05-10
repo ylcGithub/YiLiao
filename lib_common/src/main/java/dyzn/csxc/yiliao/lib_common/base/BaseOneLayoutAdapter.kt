@@ -37,10 +37,7 @@ abstract class BaseOneLayoutAdapter<E, VB : ViewDataBinding>(@LayoutRes val layo
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vb = DataBindingUtil.inflate<VB>(
-            LayoutInflater.from(parent.context),
-            layoutId,
-            parent,
-            false
+            LayoutInflater.from(parent.context), layoutId, parent, false
         )
         return BaseOneBindingViewHolder(vb.root)
     }
@@ -48,15 +45,15 @@ abstract class BaseOneLayoutAdapter<E, VB : ViewDataBinding>(@LayoutRes val layo
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val binding = DataBindingUtil.getBinding<VB>(holder.itemView)
         binding?.let {
-            this.onBindOneTypeItem(it, dataList[position], holder)
+            val item = dataList[position]
+            it.root.setOnClickListener { mItemListener?.invoke(position,item) }
+            this.onBindOneTypeItem(it, item, holder)
             it.executePendingBindings()
         }
     }
 
     override fun onBindViewHolder(
-        holder: RecyclerView.ViewHolder,
-        position: Int,
-        payloads: MutableList<Any>
+        holder: RecyclerView.ViewHolder, position: Int, payloads: MutableList<Any>
     ) {
         if (payloads.isEmpty()) {
             super.onBindViewHolder(holder, position, payloads)
@@ -117,8 +114,7 @@ abstract class BaseOneLayoutAdapter<E, VB : ViewDataBinding>(@LayoutRes val layo
 
         override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
             itemIsSame(
-                oldList[oldItemPosition],
-                newList[newItemPosition]
+                oldList[oldItemPosition], newList[newItemPosition]
             )
 
         override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
@@ -163,5 +159,10 @@ abstract class BaseOneLayoutAdapter<E, VB : ViewDataBinding>(@LayoutRes val layo
         val count = dataList.size
         dataList.clear()
         notifyItemRangeRemoved(0, count)
+    }
+
+    private var mItemListener: ((index:Int,item: E) -> Unit)? = null
+    fun setOnItemClickListener(lis: ((index:Int,e: E) -> Unit)) {
+        mItemListener = lis
     }
 }

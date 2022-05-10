@@ -1,7 +1,10 @@
 package dyzn.csxc.yiliao.lib_common.base
 
 import androidx.lifecycle.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 
 /**
  *@author YLC-D
@@ -11,7 +14,7 @@ open class BaseViewModel : ViewModel(), LifecycleObserver {
     /**
      * 是否显示加载框
      */
-    private val showLoading: MutableLiveData<Boolean> by lazy { MutableLiveData(false) }
+    private val showLoading = MutableLiveData<Boolean>()
 
     /**
      * 加载时显示的文字
@@ -31,8 +34,13 @@ open class BaseViewModel : ViewModel(), LifecycleObserver {
         _pageBack.value = true
     }
 
-     private fun runOnMain(work: suspend CoroutineScope.() -> Unit) =
+    fun runOnMain(work: suspend CoroutineScope.() -> Unit) =
         viewModelScope.launch(Dispatchers.Main) {
+            work()
+        }
+
+    fun runOnThread(work: suspend CoroutineScope.() -> Unit) =
+        viewModelScope.launch(Dispatchers.IO) {
             work()
         }
 
