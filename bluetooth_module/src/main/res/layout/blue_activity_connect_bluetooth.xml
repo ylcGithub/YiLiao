@@ -38,6 +38,7 @@
             style="@style/blue_et_style"
             afterTextChanged="@{vm.msg}"
             android:hint="@string/blue_input_send_msg"
+            android:text="@{vm.msg}"
             app:layout_constraintBottom_toTopOf="@+id/btn_send"
             app:layout_constraintStart_toStartOf="parent"
             app:under_line_color="@color/color_main_blue"
@@ -55,5 +56,14 @@
             app:layout_constraintBottom_toBottomOf="parent"
             tools:ignore="TextContrastCheck"
             tools:layout_editor_absoluteX="20dp" />
+
+        <dyzn.csxc.yiliao.lib_common.widget.AppImageView
+            android:id="@+id/iv_delete_et"
+            android:onClick="@{vm.deleteInput}"
+            android:layout_marginEnd="@dimen/widget_size_15"
+            app:layout_constraintTop_toTopOf="@+id/et_msg"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_width="@dimen/widget_size_30"
+            android:layout_height="@dimen/widget_size_30"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

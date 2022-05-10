@@ -62,7 +62,6 @@ class BluetoothScanFragment :
     }
 
     inner class ClickProxy {
-
         fun back() {
             bvm.pageBack
         }

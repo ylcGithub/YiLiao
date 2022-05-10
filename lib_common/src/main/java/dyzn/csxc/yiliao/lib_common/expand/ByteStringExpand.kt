@@ -3,8 +3,8 @@ package dyzn.csxc.yiliao.lib_common.expand
 import okhttp3.internal.and
 private val hexArray = "0123456789ABCDEF".toCharArray()
 
-fun String.decodeHexStringToByteArray(): ByteArray {
-    check(length % 2 == 0) { "Must have an even length" }
+fun String.encodeHexStringToByteArray(): ByteArray {
+    check(length % 2 == 0) { "16进制数据长度必须是偶数" }
     return chunked(2)
         .map { it.toInt(16).toByte() }
         .toByteArray()

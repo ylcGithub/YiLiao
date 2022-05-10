@@ -1,5 +1,5 @@
 package dyzn.csxc.yiliao.bluetooth.bean
 
-import java.util.*
+import android.bluetooth.BluetoothGattService
 
-data class GattServiceBean(val name:String,val uuid: UUID,val type:Int,var selected:Boolean)
+data class GattServiceBean(val service:BluetoothGattService,var selected:Boolean = false,var expand:Boolean = false)
