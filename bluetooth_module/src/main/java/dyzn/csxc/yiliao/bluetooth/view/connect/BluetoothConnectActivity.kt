@@ -10,12 +10,11 @@ import dyzn.csxc.yiliao.bluetooth.databinding.BlueActivityConnectBluetoothBindin
 import dyzn.csxc.yiliao.lib_common.base.BaseMvvmActivity
 import dyzn.csxc.yiliao.lib_common.config.RoutePath
 import dyzn.csxc.yiliao.lib_common.expand.toast
+import dyzn.csxc.yiliao.lib_common.expand.ylDecodeHexStringToString
 import dyzn.csxc.yiliao.lib_common.util.LayoutManagerUtil
 import dyzn.csxc.yiliao.lib_common.util.LogUtil
 import dyzn.csxc.yiliao.lib_common.util.ResUtil
 import dyzn.csxc.yiliao.lib_common.widget.CustomItemDecoration
-import okio.ByteString.Companion.decodeHex
-import java.util.regex.Pattern
 
 @Route(path = RoutePath.CONNECT_BlUE_TOOTH_ACTIVITY)
 class BluetoothConnectActivity :
@@ -52,10 +51,16 @@ class BluetoothConnectActivity :
             CustomItemDecoration.Type.VER, ResUtil.getColor(R.color.color_main_blue)
         ).also {
             it.space = 4
+            it.mostTop = 4
         })
         ada.setSelectClick { s_index, c_index, d_index ->
             //关闭展开并取消选中
-            if (s_index == -2) ada.setSelected(c_index)
+            if (s_index == -2) {
+                mViewModel.c_s_index = -1
+                mViewModel.c_c_index = -1
+                mViewModel.c_d_index = -1
+                ada.setSelected(c_index)
+            }
             else if (s_index != -1) {//展开并选中
                 mViewModel.c_s_index = s_index
                 mViewModel.c_c_index = -1
@@ -97,13 +102,10 @@ class BluetoothConnectActivity :
                 "请选中要使用的特征".toast()
                 return
             }
-            val msg: String? = mViewModel.msg.value
-            when {
-                msg == null -> "请输入发送内容".toast()
-                Pattern.matches(
-                    "^[A-Fa-f0-9]+\$", msg
-                ) -> mViewModel.sendDataWithCharacteristic(msg.decodeHex().toByteArray())
-                else -> "需要16进制字符串".toast()
+            when (val msg: String? = mViewModel.msg.value) {
+                null -> "请输入发送内容".toast()
+                "" -> "请输入发送内容".toast()
+                else -> mViewModel.sendDataWithCharacteristic(msg.toByteArray())
             }
         }
     }
@@ -134,12 +136,16 @@ class BluetoothConnectActivity :
         override fun readCharacteristic(data: String) {
             LogUtil.log(data)
             val ind = data.indexOf("特征值=")
-            mViewModel.msg.value = mViewModel.msg.value + "\n蓝牙返回：\n${data.substring(ind + 4)}"
+            mViewModel.msg.value = mViewModel.msg.value + "\nBle返回:${data.substring(ind + 4).ylDecodeHexStringToString()}"
         }
 
         override fun writeCharacteristic(data: String) {
             LogUtil.log(data)
-            "特征写入结果====$data".toast()
+            val indexOf = data.indexOf("写入值=")
+            if(indexOf>0){
+                val s = data.substring(indexOf+4).ylDecodeHexStringToString()
+                LogUtil.log("(解析后的)写入值=:$s")
+            }
             mViewModel.readCharacteristicReturn()
         }
 

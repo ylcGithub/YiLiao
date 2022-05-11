@@ -78,10 +78,7 @@ class CustomItemDecoration(val type: Type, @ColorInt val color: Int = Color.TRAN
     }
 
     override fun getItemOffsets(
-        outRect: Rect,
-        view: View,
-        parent: RecyclerView,
-        state: RecyclerView.State
+        outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State
     ) {
         if (type == Type.GRID) {
             gridDecoration(outRect, view, parent)
@@ -169,7 +166,7 @@ class CustomItemDecoration(val type: Type, @ColorInt val color: Int = Color.TRAN
                     outRect.set(mostLeft, mostTop, mostRight, space)
                 }
                 childCount - 1 -> {
-                    outRect.set(mostLeft, 0, mostRight, mostBottom)
+                    outRect.set(mostLeft, 0, mostRight, if (mostBottom > 0) mostBottom else space)
                 }
                 else -> {
                     outRect.set(mostLeft, 0, mostRight, space)
@@ -187,10 +184,7 @@ class CustomItemDecoration(val type: Type, @ColorInt val color: Int = Color.TRAN
             rect?.let {
                 if (it.left > 0) {
                     leftRect.set(
-                        itemView.left - it.left,
-                        itemView.top,
-                        itemView.right,
-                        itemView.bottom
+                        itemView.left - it.left, itemView.top, itemView.right, itemView.bottom
                     )
                     drawLine(c, leftRect, paint)
                 }
@@ -205,10 +199,7 @@ class CustomItemDecoration(val type: Type, @ColorInt val color: Int = Color.TRAN
                 }
                 if (it.right > 0) {
                     rightRect.set(
-                        itemView.right,
-                        itemView.top,
-                        itemView.right + it.right,
-                        itemView.bottom
+                        itemView.right, itemView.top, itemView.right + it.right, itemView.bottom
                     )
                     drawLine(c, rightRect, paint)
                 }

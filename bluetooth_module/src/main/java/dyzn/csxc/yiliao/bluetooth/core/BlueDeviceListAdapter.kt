@@ -2,6 +2,7 @@ package dyzn.csxc.yiliao.bluetooth.core
 
 import android.annotation.SuppressLint
 import android.bluetooth.le.ScanRecord
+import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import dyzn.csxc.yiliao.bluetooth.R
 import dyzn.csxc.yiliao.bluetooth.bean.ADStructure
@@ -10,7 +11,7 @@ import dyzn.csxc.yiliao.bluetooth.databinding.BlueDeviceListItemBinding
 import dyzn.csxc.yiliao.bluetooth.view.ShowRawDataPop
 import dyzn.csxc.yiliao.lib_common.base.BaseApplication
 import dyzn.csxc.yiliao.lib_common.base.BaseOneLayoutAdapter
-import dyzn.csxc.yiliao.lib_common.expand.decodeHexString
+import dyzn.csxc.yiliao.lib_common.expand.ylDecodeAlignHexString
 import dyzn.csxc.yiliao.lib_common.util.LogUtil
 import dyzn.csxc.yiliao.lib_common.widget.AppTextView
 import java.util.*
@@ -29,7 +30,6 @@ class BlueDeviceListAdapter :
         binding.tvAddress.text = item.device.address
         binding.tvBondState.text = (if (item.device.bondState == 12) "已绑定" else "未绑定")
         binding.tvRssi.text = "rssi:${item.rssi}"
-        binding.tvUuids.text = "UUIDS:"
         //存储广播数据单元数组
         val mADStructureArray = ArrayList<ADStructure>()
         val raw = item.scanRecordBytes?.let { parseBleADData(it,mADStructureArray) }
@@ -65,6 +65,8 @@ class BlueDeviceListAdapter :
 
     @SuppressLint("SetTextI18n")
     private fun setServiceData(tvServiceData:AppTextView, scanRecord: ScanRecord?,mADStructureArray:ArrayList<ADStructure>){
+        tvServiceData.text = ""
+        tvServiceData.visibility = View.GONE
         scanRecord?.serviceData?.let{
             for (adStructure in mADStructureArray) {
                 when(adStructure.type){
@@ -76,6 +78,7 @@ class BlueDeviceListAdapter :
                         val uuid = "0x" + data.substring(2,4) + data.substring(0,2)
                         //获取对应的数据
                         val serviceData = data.substring(4,data.length)
+                        tvServiceData.visibility = View.VISIBLE
                         tvServiceData.text = "16-bit UUID: ${"0X$uuid"} \n数据: ${"0x$serviceData"}"
                     }
                     //android发不出32bit的服务数据
@@ -101,7 +104,7 @@ class BlueDeviceListAdapter :
      */
     private fun parseBleADData(byteArray: ByteArray,mADStructureArray:ArrayList<ADStructure>): String {
         //将字节数组转十六进制字符串
-        var rawDataStr = byteArray.decodeHexString()
+        var rawDataStr = byteArray.ylDecodeAlignHexString()
         //存储实际数据段
         var dataStr = ""
         while (true) {
@@ -141,7 +144,7 @@ class BlueDeviceListAdapter :
                         for (i in 0 until dataStr.length / 4) {
                             val uuid = "0x" + dataStr.substring(2 + i * 4, 4 + i * 4) +
                                     dataStr.substring(0 + i * 4, 2 + i * 4)
-                            uuids = (if (uuids == "") "16位的UUIDS:${uuid}" else "$uuids,$uuid")
+                            uuids = if (uuids == "") "16位UUIDS:${uuid}" else "$uuids,$uuid"
                         }
                     }
                     //完整的32bit UUID 列表
@@ -157,13 +160,13 @@ class BlueDeviceListAdapter :
                                         2 + i * 8,
                                         4 + i * 8
                                     ) + dataStr.substring(0 + i * 8, 2 + i * 8)
-                            uuids = (if (uuids == "") "32位的UUIDS:${uuid}" else "$uuids, $uuid")
+                            uuids = (if (uuids == "") "32位UUIDS:${uuid}" else "$uuids, $uuid")
                         }
                     }
                 }
             }
         }
-        if(uuids.isEmpty()) uuids = "没有查到对应的UUID"
+        if(uuids.isEmpty()) uuids = "没有查到UUID"
         return uuids
     }
 

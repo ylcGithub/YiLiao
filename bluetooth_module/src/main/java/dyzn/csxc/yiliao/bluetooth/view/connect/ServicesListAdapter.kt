@@ -25,11 +25,11 @@ class ServicesListAdapter :
     override fun onBindOneTypeItem(
         binding: BlueServicesListItemBinding, item: GattServiceBean, holder: RecyclerView.ViewHolder
     ) {
-        binding.tvName.text = "名称：${getServiceName(item.service.uuid)}"
+        binding.tvName.text = "名称:${getServiceName(item.service.uuid)}"
         binding.tvUuid.text = "UUID:${item.service.uuid}"
         when (item.service.type) {
-            SERVICE_TYPE_PRIMARY -> binding.tvType.text = "类型：主要服务"
-            SERVICE_TYPE_SECONDARY -> binding.tvType.text = "类型：二级服务(包括在主要服务中)"
+            SERVICE_TYPE_PRIMARY -> binding.tvType.text = "类型:主要服务"
+            SERVICE_TYPE_SECONDARY -> binding.tvType.text = "类型:二级服务(包括在主要服务中)"
         }
         binding.ivSelected.isSelected = item.selected
         binding.root.setOnClickListener {

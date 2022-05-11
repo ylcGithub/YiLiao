@@ -5,9 +5,10 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/widget_size_150</item>
         <item name="android:padding">@dimen/widget_size_5</item>
-        <item name="android:textColor">@color/color_333</item>
+        <item name="android:textColor">@color/color_666</item>
         <item name="android:textColorHint">@color/color_999</item>
-        <item name="android:textSize">@dimen/font_size_20</item>
+        <item name="android:textSize">@dimen/font_size_16</item>
+        <item name="android:background">@color/white</item>
         <item name="android:gravity">left|top</item>
     </style>
 

@@ -1,6 +1,11 @@
 package dyzn.csxc.yiliao.bluetooth.view.scan
 
+import android.app.AlertDialog
+import android.content.Context
+import android.content.Intent
+import android.location.LocationManager
 import android.os.Bundle
+import android.provider.Settings
 import com.jeremyliao.liveeventbus.LiveEventBus
 import dyzn.csxc.yiliao.bluetooth.R
 import dyzn.csxc.yiliao.bluetooth.core.BlueDeviceListAdapter
@@ -17,6 +22,8 @@ import dyzn.csxc.yiliao.lib_common.expand.toast
 import dyzn.csxc.yiliao.lib_common.util.LayoutManagerUtil
 import dyzn.csxc.yiliao.lib_common.util.ResUtil
 import dyzn.csxc.yiliao.lib_common.widget.CustomItemDecoration
+
+
 /**
  *@author YLC-D
  *@create on 2022/3/14 09
@@ -70,11 +77,36 @@ class BluetoothScanFragment :
             android.Manifest.permission.ACCESS_FINE_LOCATION], 102)
         @DoubleClickCheck
         fun searchBlue() {
-            if (BluetoothUtils.startScanBle(mContext)) showLoading("蓝牙扫描中....")
+            if(isOpenGps() && BluetoothUtils.startScanBle(mContext)){
+                showLoading("蓝牙扫描中....")
+            }else if(!isOpenGps()){
+                openGps()
+            }
         }
         @PermissionDefied(requestCode = 102)
         fun denyPer() {
             "拒绝定位无法搜索到附近的蓝牙设备".toast()
         }
     }
+
+    fun isOpenGps():Boolean{
+        //从系统服务中获取定位管理器
+        val lm = mContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return lm.isProviderEnabled(LocationManager.GPS_PROVIDER)
+    }
+    fun openGps(){
+        AlertDialog.Builder(mContext)
+            .setTitle("提示")
+            .setMessage("BLE蓝牙访问需要手机打开GPS功能")
+            .setPositiveButton("去打开") { dialog, which ->
+                run {
+                    val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                    startActivity(intent)
+                }
+            }
+            .setNegativeButton("取消"){d,w-> d.dismiss()}
+            .show()
+
+    }
+
 }

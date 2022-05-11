@@ -7,8 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import dyzn.csxc.yiliao.bluetooth.bean.GattServiceBean
 import dyzn.csxc.yiliao.lib_common.base.BaseApplication
 import dyzn.csxc.yiliao.lib_common.base.BaseViewModel
-import dyzn.csxc.yiliao.lib_common.expand.decodeHexString
 import dyzn.csxc.yiliao.lib_common.expand.toast
+import dyzn.csxc.yiliao.lib_common.expand.ylDecodeHexString
 import dyzn.csxc.yiliao.lib_common.util.LogUtil
 import java.util.*
 import kotlin.concurrent.schedule
@@ -214,7 +214,7 @@ class BluetoothConnectViewModel : BaseViewModel() {
         when (status) {
             BluetoothGatt.GATT_SUCCESS -> {
                 characteristic?.let {
-                    val value = it.value.decodeHexString()
+                    val value = it.value.ylDecodeHexString()
                     val s = "特征读取 CharacteristicUUID = ${it.uuid} ,特征值=$value"
                     runOnMain { mListener?.readCharacteristic(s) }
                 }
@@ -234,7 +234,7 @@ class BluetoothConnectViewModel : BaseViewModel() {
         when (status) {
             BluetoothGatt.GATT_SUCCESS -> {
                 characteristic?.let {
-                    val s = "特征写入成功：特征UUID = ${it.uuid} ,写入值 = ${it.value.decodeHexString()}"
+                    val s = "特征写入成功：特征UUID = ${it.uuid} ,写入值=${it.value.ylDecodeHexString()}"
                     runOnMain { mListener?.writeCharacteristic(s) }
                     Timer().schedule(5000L) {
                         mBluetoothGatt.readCharacteristic(mGattServiceList[c_s_index].characteristics[c_c_index])
@@ -251,7 +251,7 @@ class BluetoothConnectViewModel : BaseViewModel() {
     //特征值的改变
     private fun characteristicChanged(characteristic: BluetoothGattCharacteristic?) {
         characteristic?.let {
-            val s = "特征改变 CharacteristicUUID = ${it.uuid},改变值 = ${it.value.decodeHexString()}"
+            val s = "特征改变 CharacteristicUUID = ${it.uuid},改变值 = ${it.value.ylDecodeHexString()}"
             runOnMain { mListener?.characteristicChange(s) }
         }
     }
@@ -261,7 +261,7 @@ class BluetoothConnectViewModel : BaseViewModel() {
         when (status) {
             BluetoothGatt.GATT_SUCCESS -> {
                 descriptor?.let {
-                    val s = "描述写入 DescriptorUUID = ${it.uuid} ,写入值 = ${it.value.decodeHexString()}"
+                    val s = "描述写入 DescriptorUUID = ${it.uuid} ,写入值 = ${it.value.ylDecodeHexString()}"
                     runOnMain { mListener?.writeDescriptor(s) }
                 }
             }
@@ -278,7 +278,7 @@ class BluetoothConnectViewModel : BaseViewModel() {
             //操作成功
             BluetoothGatt.GATT_SUCCESS -> {
                 descriptor?.let {
-                    val value = it.value.decodeHexString()
+                    val value = it.value.ylDecodeHexString()
                     val s = "描述读取 DescriptorUUID = ${it.uuid} ,描述值 = $value"
                     runOnMain { mListener?.readDescriptor(s) }
                 }
@@ -384,7 +384,10 @@ class BluetoothConnectViewModel : BaseViewModel() {
 
     fun readCharacteristicReturn() {
         if (isConnected) runOnThread {
-            mBluetoothGatt.readCharacteristic(currentCharacteristic)
+            currentCharacteristic?.let {
+                mBluetoothGatt.readCharacteristic(it)
+            }
+
         }
     }
     /**********************************************BLE蓝牙连接功能结束**************************************************/

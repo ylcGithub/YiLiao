@@ -98,5 +98,5 @@ dependencies {
     //room
     annotationProcessor  rootProject.ext.dependencies["room_compiler"]
     //ARouter
-//    annotationProcessor  rootProject.ext.dependencies["arouter_compiler"]
+    kapt  rootProject.ext.dependencies["arouter_compiler"]
 }
