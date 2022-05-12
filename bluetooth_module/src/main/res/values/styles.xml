@@ -3,7 +3,7 @@
 
     <style name="blue_et_style">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/widget_size_150</item>
+        <item name="android:layout_height">@dimen/widget_size_140</item>
         <item name="android:padding">@dimen/widget_size_5</item>
         <item name="android:textColor">@color/color_666</item>
         <item name="android:textColorHint">@color/color_999</item>

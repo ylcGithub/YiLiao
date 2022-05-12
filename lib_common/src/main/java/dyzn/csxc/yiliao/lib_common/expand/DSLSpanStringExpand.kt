@@ -10,7 +10,8 @@ import android.text.style.ForegroundColorSpan
 import android.text.style.UnderlineSpan
 import android.view.View
 import android.widget.TextView
-import androidx.annotation.ColorInt
+import androidx.annotation.ColorRes
+import dyzn.csxc.yiliao.lib_common.util.ResUtil
 
 interface DslSpannableStringBuilder {
     //增加一段文字
@@ -19,7 +20,8 @@ interface DslSpannableStringBuilder {
 
 interface DslSpanBuilder {
     //设置文字颜色
-    fun setColor(@ColorInt color: Int)
+    fun setColor(@ColorRes colorId: Int)
+
     //设置点击事件
     fun onClick(useUnderLine: Boolean = false, onClick: (View) -> Unit)
 }
@@ -29,7 +31,6 @@ class DslSpannableStringBuilderImpl : DslSpannableStringBuilder {
     //记录上次添加文字后最后的索引值
     var lastIndex: Int = 0
     var isClickable = false
-
     override fun addText(text: String, method: (DslSpanBuilder.() -> Unit)?) {
         val start = lastIndex
         builder.append(text)
@@ -61,8 +62,8 @@ class DslSpanBuilderImpl : DslSpanBuilder {
     var onClickSpan: ClickableSpan? = null
     var useUnderLine = true
 
-    override fun setColor(@ColorInt color: Int) {
-        foregroundColorSpan = ForegroundColorSpan(color)
+    override fun setColor(@ColorRes colorId: Int) {
+        foregroundColorSpan = ForegroundColorSpan(ResUtil.getColor(colorId))
     }
 
     override fun onClick(useUnderLine: Boolean, onClick: (View) -> Unit) {
@@ -82,13 +83,13 @@ class NoUnderlineSpan : UnderlineSpan() {
     }
 }
 
-//为 TextView 创建扩展函数，其参数为接口的扩展函数
-fun TextView.buildSpannableString(init: DslSpannableStringBuilder.() -> Unit) {
+//为 TextView 创建扩展函数，其参数为接口的扩展函数 (isAppend：添加text是否是追加)
+inline fun TextView.setSpannableString(isAppend: Boolean = false,
+    init: DslSpannableStringBuilder.() -> Unit) {
     //具体实现类
     val spanStringBuilderImpl = DslSpannableStringBuilderImpl()
     spanStringBuilderImpl.init()
     movementMethod = LinkMovementMethod.getInstance()
-    //通过实现类返回SpannableStringBuilder
-//    text = spanStringBuilderImpl.build()
-    append(spanStringBuilderImpl.build())
+    if(isAppend)append(spanStringBuilderImpl.build())
+    else text = spanStringBuilderImpl.build()
 }

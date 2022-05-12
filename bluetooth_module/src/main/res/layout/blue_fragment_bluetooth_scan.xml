@@ -4,9 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
-        <import type="dyzn.csxc.yiliao.bluetooth.util.BlueMatchUtil" />
-
         <import type="android.view.View" />
 
         <variable

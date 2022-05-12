@@ -13,8 +13,6 @@ import dyzn.csxc.yiliao.lib_common.expand.toast
 import dyzn.csxc.yiliao.lib_common.expand.ylDecodeHexStringToString
 import dyzn.csxc.yiliao.lib_common.util.LayoutManagerUtil
 import dyzn.csxc.yiliao.lib_common.util.LogUtil
-import dyzn.csxc.yiliao.lib_common.util.ResUtil
-import dyzn.csxc.yiliao.lib_common.widget.CustomItemDecoration
 
 @Route(path = RoutePath.CONNECT_BlUE_TOOTH_ACTIVITY)
 class BluetoothConnectActivity :
@@ -47,34 +45,22 @@ class BluetoothConnectActivity :
         val ada = ServicesListAdapter()
         mBinding.rcvServices.layoutManager = LayoutManagerUtil.getVertical(this)
         mBinding.rcvServices.adapter = ada
-        mBinding.rcvServices.addItemDecoration(CustomItemDecoration(
-            CustomItemDecoration.Type.VER, ResUtil.getColor(R.color.color_main_blue)
-        ).also {
-            it.space = 4
-            it.mostTop = 4
-        })
         ada.setSelectClick { s_index, c_index, d_index ->
-            //关闭展开并取消选中
-            if (s_index == -2) {
-                mViewModel.c_s_index = -1
-                mViewModel.c_c_index = -1
-                mViewModel.c_d_index = -1
-                ada.setSelected(c_index)
+            when {
+                s_index != -1 -> {//展开并选中
+                    mViewModel.sIndex = s_index
+                    mViewModel.cIndex = -1
+                    mViewModel.dIndex = -1
+                    mBinding.rcvServices.smoothScrollToPosition(s_index)
+                }
+                c_index != -1 -> {
+                    mViewModel.cIndex = c_index
+                    mViewModel.dIndex = -1
+                }
+                d_index != -1 -> {
+                    mViewModel.dIndex = d_index
+                }
             }
-            else if (s_index != -1) {//展开并选中
-                mViewModel.c_s_index = s_index
-                mViewModel.c_c_index = -1
-                mViewModel.c_d_index = -1
-                ada.setSelected(s_index)
-                mBinding.rcvServices.scrollToPosition(s_index)
-            }
-            if (c_index != -1) {
-                mViewModel.c_c_index = c_index
-                mViewModel.c_d_index = -1
-            }
-            if (d_index != -1) mViewModel.c_d_index = d_index
-
-
         }
         mViewModel.list.observe(this) {
             ada.updateList(it)
@@ -94,11 +80,11 @@ class BluetoothConnectActivity :
         }
 
         fun sendMsg() {
-            if (mViewModel.c_s_index < 0) {
+            if (mViewModel.sIndex < 0) {
                 "请选中要使用的服务".toast()
                 return
             }
-            if (mViewModel.c_c_index < 0) {
+            if (mViewModel.cIndex < 0) {
                 "请选中要使用的特征".toast()
                 return
             }
@@ -136,14 +122,16 @@ class BluetoothConnectActivity :
         override fun readCharacteristic(data: String) {
             LogUtil.log(data)
             val ind = data.indexOf("特征值=")
-            mViewModel.msg.value = mViewModel.msg.value + "\nBle返回:${data.substring(ind + 4).ylDecodeHexStringToString()}"
+            mViewModel.msg.value = mViewModel.msg.value + "\nBle返回:${
+                data.substring(ind + 4).ylDecodeHexStringToString()
+            }"
         }
 
         override fun writeCharacteristic(data: String) {
             LogUtil.log(data)
             val indexOf = data.indexOf("写入值=")
-            if(indexOf>0){
-                val s = data.substring(indexOf+4).ylDecodeHexStringToString()
+            if (indexOf > 0) {
+                val s = data.substring(indexOf + 4).ylDecodeHexStringToString()
                 LogUtil.log("(解析后的)写入值=:$s")
             }
             mViewModel.readCharacteristicReturn()

@@ -15,14 +15,6 @@ fun Context.toast(content: String, duration: Int = Toast.LENGTH_SHORT) {
 fun Context.toast(@StringRes id: Int, duration: Int = Toast.LENGTH_SHORT) {
     toast(getString(id), duration)
 }
-
 fun Any.toast(duration: Int = Toast.LENGTH_SHORT) {
     BaseApplication.getAppContext().toast(this.toString(), duration)
-}
-fun Any.toast(content: String,duration: Int = Toast.LENGTH_SHORT) {
-    BaseApplication.getAppContext().toast(content, duration)
-}
-
-fun Any.toast(@StringRes id: Int, duration: Int=Toast.LENGTH_SHORT) {
-    BaseApplication.getAppContext().toast(id, duration)
 }

@@ -7,11 +7,12 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/widget_size_10">
+        android:layout_height="wrap_content">
 
         <dyzn.csxc.yiliao.lib_common.widget.AppTextView
             android:id="@+id/tv_name"
+            android:layout_marginStart="@dimen/widget_size_10"
+            android:layout_marginTop="@dimen/widget_size_10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/color_333"
@@ -28,7 +29,7 @@
             android:layout_marginTop="@dimen/widget_size_5"
             android:textColor="@color/color_666"
             android:textSize="@dimen/font_size_16"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tv_name"
             app:layout_constraintTop_toBottomOf="@+id/tv_name"
             tools:text="uuid:4444444sd1f11f" />
 
@@ -39,7 +40,7 @@
             android:layout_marginTop="@dimen/widget_size_5"
             android:textColor="@color/color_666"
             android:textSize="@dimen/font_size_16"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tv_name"
             app:layout_constraintTop_toBottomOf="@+id/tv_uuid"
             tools:text="服务类型" />
 
@@ -47,21 +48,30 @@
             android:id="@+id/iv_selected"
             android:layout_width="@dimen/widget_size_20"
             android:layout_height="@dimen/widget_size_20"
+            android:layout_marginEnd="@dimen/widget_size_10"
             android:src="@drawable/check_box_normal_color_333_selected_selector"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_type"
+            app:layout_goneMarginEnd="@dimen/widget_size_10"
+            android:layout_marginTop="@dimen/widget_size_10"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tv_name" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <dyzn.csxc.yiliao.lib_common.widget.AppTextView
             android:id="@+id/tv_expand"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/color_999"
             android:textSize="@dimen/font_size_12"
-            android:layout_marginStart="@dimen/widget_size_5"
             tools:text="特征1，uuid"
             android:layout_marginTop="@dimen/widget_size_5"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="@dimen/widget_size_5"
+            app:layout_constraintStart_toStartOf="@+id/tv_name"
             app:layout_constraintTop_toBottomOf="@+id/tv_type" />
+
+        <View
+            app:layout_constraintTop_toBottomOf="@+id/tv_expand"
+            android:background="@color/color_main_blue"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/widget_size_10"
+            android:layout_height="@dimen/widget_size_4"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

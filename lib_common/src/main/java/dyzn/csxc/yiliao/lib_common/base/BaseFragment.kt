@@ -87,12 +87,12 @@ abstract class BaseFragment<VM : BaseViewModel, B : ViewDataBinding> : Fragment(
     private lateinit var mFragmentProvider: ViewModelProvider
     private lateinit var mActivityProvider: ViewModelProvider
 
-    protected open fun getFragmentViewModelProvider(fragment: Fragment): ViewModelProvider {
+    protected open fun getFragVmProd(fragment: Fragment): ViewModelProvider {
         if (!this::mFragmentProvider.isInitialized) mFragmentProvider = ViewModelProvider(fragment)
         return mFragmentProvider
     }
 
-    protected open fun getActivityViewModelProvider(activity: FragmentActivity): ViewModelProvider {
+    protected open fun getAcVmProd(activity: FragmentActivity): ViewModelProvider {
         if (!this::mActivityProvider.isInitialized) mActivityProvider = ViewModelProvider(activity)
         return mActivityProvider
     }

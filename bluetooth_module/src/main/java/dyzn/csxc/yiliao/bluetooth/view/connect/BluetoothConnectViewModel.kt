@@ -2,9 +2,9 @@ package dyzn.csxc.yiliao.bluetooth.view.connect
 
 import android.bluetooth.*
 import android.os.Build
-import android.view.View
 import androidx.lifecycle.MutableLiveData
 import dyzn.csxc.yiliao.bluetooth.bean.GattServiceBean
+import dyzn.csxc.yiliao.bluetooth.util.BeanConvertHelper
 import dyzn.csxc.yiliao.lib_common.base.BaseApplication
 import dyzn.csxc.yiliao.lib_common.base.BaseViewModel
 import dyzn.csxc.yiliao.lib_common.expand.toast
@@ -17,7 +17,7 @@ import kotlin.concurrent.schedule
 class BluetoothConnectViewModel : BaseViewModel() {
     //需要发送的消息
     val msg = MutableLiveData<String>()
-    fun deleteInput(v: View){
+    fun deleteInput() {
         msg.value = ""
     }
     /*********************************************BLE蓝牙连接功能开始***************************************************/
@@ -25,13 +25,13 @@ class BluetoothConnectViewModel : BaseViewModel() {
     private val mGattServiceList = ArrayList<BluetoothGattService>()
 
     //当前选中服务的列表下表
-    var c_s_index: Int = -1
+    var sIndex: Int = -1
 
     //当前服务选中的特征列表下标
-    var c_c_index: Int = -1
+    var cIndex: Int = -1
 
     //当前特征选中的描述下标
-    var c_d_index: Int = -1
+    var dIndex: Int = -1
     val list = MutableLiveData<ArrayList<GattServiceBean>>()
 
     //标记是否连接
@@ -157,7 +157,7 @@ class BluetoothConnectViewModel : BaseViewModel() {
                 mGattServiceList.addAll(mBluetoothGatt.services)
                 val lis = ArrayList<GattServiceBean>()
                 mGattServiceList.forEach {
-                    val b = GattServiceBean(it)
+                    val b = BeanConvertHelper.convertBgs(it)
                     lis.add(b)
                 }
                 runOnMain {
@@ -237,7 +237,7 @@ class BluetoothConnectViewModel : BaseViewModel() {
                     val s = "特征写入成功：特征UUID = ${it.uuid} ,写入值=${it.value.ylDecodeHexString()}"
                     runOnMain { mListener?.writeCharacteristic(s) }
                     Timer().schedule(5000L) {
-                        mBluetoothGatt.readCharacteristic(mGattServiceList[c_s_index].characteristics[c_c_index])
+                        mBluetoothGatt.readCharacteristic(mGattServiceList[sIndex].characteristics[cIndex])
                     }
                 }
             }
@@ -332,21 +332,12 @@ class BluetoothConnectViewModel : BaseViewModel() {
     }
 
     /**
-     * 断开连接，会触发onConnectionStateChange回调，在onConnectionStateChange回调中调用mBluetoothGatt.close()
-     */
-    fun disConnection() {
-        if (isConnected) {
-            isConnected = false
-            mBluetoothGatt.disconnect()
-        }
-    }
-
-    /**
      * 彻底关闭连接，不带onConnectionStateChange回调的
      */
     private fun closeConnection() {
         if (isConnected) {
             isConnected = false
+            //断开连接，会触发onConnectionStateChange回调，在onConnectionStateChange回调中调用mBluetoothGatt.close()
             mBluetoothGatt.disconnect()
             //调用close()后，连接时传入callback会被置空，无法得到断开连接时onConnectionStateChange（）回调
             mBluetoothGatt.close()
@@ -367,10 +358,10 @@ class BluetoothConnectViewModel : BaseViewModel() {
      */
     fun sendDataWithCharacteristic(data: ByteArray?): Boolean {
         // 获取蓝牙设备的服务
-        val serviceUuid = mGattServiceList[c_s_index].uuid
+        val serviceUuid = mGattServiceList[sIndex].uuid
         val gattService: BluetoothGattService? = mBluetoothGatt.getService(serviceUuid)
-        val characteristicWriteUuid = mGattServiceList[c_s_index].characteristics[c_c_index].uuid
-        mGattServiceList[c_s_index].characteristics[0].descriptors
+        val characteristicWriteUuid = mGattServiceList[sIndex].characteristics[cIndex].uuid
+        mGattServiceList[sIndex].characteristics[0].descriptors
         // 获取蓝牙设备的特征
         currentCharacteristic =
             gattService?.getCharacteristic(characteristicWriteUuid) ?: return false

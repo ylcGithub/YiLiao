@@ -59,10 +59,11 @@
 
         <dyzn.csxc.yiliao.lib_common.widget.AppImageView
             android:id="@+id/iv_delete_et"
-            android:onClick="@{vm.deleteInput}"
+            android:onClick="@{()->vm.deleteInput()}"
             android:layout_marginEnd="@dimen/widget_size_15"
             android:src="@drawable/blue_icon_delete"
             app:layout_constraintTop_toTopOf="@+id/et_msg"
+            app:layout_constraintBottom_toBottomOf="@+id/et_msg"
             app:layout_constraintRight_toRightOf="parent"
             android:layout_width="@dimen/widget_size_30"
             android:layout_height="@dimen/widget_size_30"/>

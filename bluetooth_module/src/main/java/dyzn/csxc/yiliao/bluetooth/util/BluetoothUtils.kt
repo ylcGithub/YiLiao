@@ -134,8 +134,8 @@ object BluetoothUtils {
             val rssi = result.rssi
             //ScanRecord record =result.getScanRecord();//搜索记录相关
             val device = result.device
-            //设备名称
-            val deviceName = device.name
+            //设备名称 为空的设备不显示
+            device.name ?: return
 //            //设备MAC地址
 //            val deviceAddress = device.address
             //BOND_NONE：数值 10 表示远程设备未绑定，没有共享链接密钥，因此通信（如果允许的话）将是未经身份验证和未加密的。【默认10未绑定】
@@ -147,9 +147,7 @@ object BluetoothUtils {
             //DEVICE_TYPE_LE  低功耗蓝牙 常量值：2【一般为2，表示为BLE设备】
             //DEVICE_TYPE_DUAL 双模蓝牙 常量值：3.
             //DEVICE_TYPE_UNKNOWN：未知 常量值：0）
-            val type = device.type
-            //设备名称为空的设备不显示
-            if (deviceName == null) return
+//            val type = device.type
             val d = BlueDevice(
                 device,
                 rssi,

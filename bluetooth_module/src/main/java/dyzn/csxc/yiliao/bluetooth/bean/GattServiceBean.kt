@@ -1,5 +1,7 @@
 package dyzn.csxc.yiliao.bluetooth.bean
 
-import android.bluetooth.BluetoothGattService
+import android.bluetooth.BluetoothGattCharacteristic
 
-data class GattServiceBean(val service:BluetoothGattService,var selected:Boolean = false,var expand:Boolean = false)
+data class GattServiceBean(val serviceName: String, val serviceUuid: String,
+    val serviceType: String, val characteristics:List<BluetoothGattCharacteristic>?,
+    var selected: Boolean = false, var expand: Boolean = false)

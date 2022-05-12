@@ -6,28 +6,19 @@ import java.io.ByteArrayOutputStream
 
 private val hexArray = "0123456789abcdef".toCharArray()
 
-//将string字符串转换成16进制字符串，再转成byte数组
-//fun String.ylEncodeToByteArray():ByteArray{
-//    //根据默认编码获取字节数组
-//    val bytes: ByteArray = toByteArray()
-//    //存储16进制字符串
-//    val sb = StringBuilder(bytes.size * 2)
-//    //将字节数组中每个字节拆解成2位16进制整数
-//    for (i in bytes.indices) {
-//        sb.append(hexArray[bytes[i] and 0xf0 shr 4])
-//        sb.append(hexArray[bytes[i] and 0x0f])
-//    }
-//    println("原始数据转成--> 16进制字符串：$sb")
-//    return this.toByteArray()
-//}
-//
-////将16进制字符串，转换成字节数组
-//fun String.ylEncodeHexToByteArray():ByteArray{
-//    val len: Int = length / 2
-//    val result = ByteArray(len)
-//
-//    return result
-//}
+//将string字符串转换成16进制字符串
+fun String.ylEncodeToHexString():String{
+    //根据默认编码获取字节数组
+    val bytes: ByteArray = toByteArray()
+    //存储16进制字符串
+    val sb = StringBuilder(bytes.size * 2)
+    //将字节数组中每个字节拆解成2位16进制整数
+    for (i in bytes.indices) {
+        sb.append(hexArray[bytes[i] and 0xf0 shr 4])
+        sb.append(hexArray[bytes[i] and 0x0f])
+    }
+    return sb.toString()
+}
 
 //将字节数组转换成16进制的字符串
 fun ByteArray.ylDecodeHexString():String{
@@ -70,8 +61,6 @@ fun String.ylDecodeHexStringToString(): String {
 
 //将字节数组转换成16进制字符串，再将16进制字符串转换成普通字符串
 fun ByteArray.ylDecodeBteToString():String{
-    println("当前需要解析的字节数组:${this.contentToString()}")
     val hexString = ylDecodeHexString()
-    println("字节数组解析成的-->16进制字符串：$hexString")
     return hexString.ylDecodeHexStringToString()
 }

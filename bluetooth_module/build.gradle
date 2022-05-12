@@ -24,8 +24,6 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    //ARouter
-//    kapt  rootProject.ext.dependencies["arouter_compiler"]
 }
 repositories {
     mavenCentral()
